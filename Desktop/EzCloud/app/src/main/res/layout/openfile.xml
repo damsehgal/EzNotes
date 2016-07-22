@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+    <EditText
+        android:layout_width="match_parent"
+        android:inputType="textFilter|textMultiLine"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:id="@+id/opened_file"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:padding="20dp"
+        >
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Chose\nFile"
+            android:textAllCaps="false"
+            android:id="@+id/btn_chose_file"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/save_file"
+            android:textAllCaps="false"
+            android:text="Save\nFile"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/upload_file"
+            android:textAllCaps="false"
+            android:text="Upload\nFile"/>
+
+    </LinearLayout>
+
+</LinearLayout>
