@@ -1,11 +1,12 @@
 <?php
-include_once 'keys.php';
+include_once 'dbconnect_app.php';
 $ftp_server = "ezcloud.esy.es";
 $ftp_conn = ftp_connect($ftp_server) or die("Could not connect to $ftp_server");
-$login = ftp_login($ftp_conn, "u386866041", $password);
+$login = ftp_login($ftp_conn, "u386866041", $password_ftp);
 $username = $_GET['username'];
-$uploads_dir = "/home/u386866041/public_html/ezCloudWebsite/".$username."/";
-echo $username;
+$repoName = $_GET['repoName'];
+$versionNum = $_GET['versionNum'];
+$uploads_dir = "/home/u386866041/public_html/ezCloudWebsite/".$username."/".$repoName."/".$versionNum."/";
 if (!file_exists($uploads_dir)) 
 {
     mkdir($uploads_dir, 0777, true);

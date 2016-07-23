@@ -356,14 +356,35 @@ public class BlankFragment extends Fragment
 			DirectoryToZip d2z = new DirectoryToZip(new DirectoryToZip.OnTaskDoneListener()
 			{
 				@Override
-				public void onTaskDone(boolean flag, String path)
+				public void onTaskDone(boolean flag, final String path)
 				{
-					if (flag)
-						Toast.makeText(getContext(), "Folder Successfully compressed" + Environment.getExternalStorageDirectory(), Toast.LENGTH_SHORT).show();
-					else
-						Toast.makeText(getContext(), "Unable to compress data", Toast.LENGTH_SHORT).show();
-					new UploadFile(path, getContext()).execute();
 
+					Log.e("TAG", "onTaskDone: " + flag );
+					if (flag)
+					{
+						Toast.makeText(getContext(), "Folder Successfully compressed" + Environment.getExternalStorageDirectory(), Toast.LENGTH_SHORT).show();
+						HashMap<String,String> hash = new HashMap<>(2);
+						hash.put("username",Home.userName);
+						hash.put("repoName",repoName.getText().toString());
+						PostRequestSend prs = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/commit.php?",hash);
+						prs.setTaskDoneListener(new PostRequestSend.TaskDoneListener()
+						{
+							@Override
+							public String onTaskDone(String str)
+							{
+
+								Log.e("onTaskDone", "onTaskDone: "+ path + " " + str  );
+								new UploadFile(path, getContext()).execute(str.split("\\s+")[str.split("\\s+").length-1], repoName.getText().toString());
+								return null;
+							}
+						});
+						prs.execute();
+
+					}
+					else
+					{
+						Toast.makeText(getContext(), "Make sure your folder is not empty", Toast.LENGTH_SHORT).show();
+					}
 				}
 			});
 			String str = "";
