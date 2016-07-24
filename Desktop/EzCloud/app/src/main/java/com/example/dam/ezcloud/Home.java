@@ -1,6 +1,7 @@
 package com.example.dam.ezcloud;
 
 
+import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Intent;
 import android.net.Uri;
@@ -21,7 +22,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -58,7 +61,6 @@ public class Home extends AppCompatActivity
 	}
 
 
-
 	public class MyOnItemClickListener implements AdapterView.OnItemClickListener
 	{
 		@Override
@@ -90,5 +92,47 @@ public class Home extends AppCompatActivity
 			((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawer(mDrawerList);
 		}
 
+	}
+	public void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		// TODO Auto-generated method stub
+		Log.e("isItCalled", "onActivityResult: ");
+		switch (requestCode)
+		{
+			case OpenFileFragment.PICK_FILE_RESULT_CODE:
+				if (resultCode == Activity.RESULT_OK)
+				{
+					uri = data.getData();
+					Log.e("URI", "onActivityResult: " + uri.toString());
+					String f2 = "";
+					try
+					{
+
+						BufferedReader buff = new BufferedReader(new InputStreamReader(this.getContentResolver().openInputStream(uri), "UTF-8"));
+						String line;
+						while ((line = buff.readLine()) != null)
+						{
+							f2 += line + "\n";
+						}
+						OpenFileFragment.et1.setText(f2);
+					}
+					catch (FileNotFoundException e)
+					{
+						Toast.makeText(this, "File Not Found", Toast.LENGTH_SHORT).show();
+					}
+					catch (IOException e)
+					{
+						Toast.makeText(this, "IO Exception", Toast.LENGTH_SHORT).show();
+					}
+					Log.e("activity", "onActivityResult: " + f2);
+				}
+				else
+				{
+					Log.e("dsaasd", "onActivityResult: ");
+				}
+
+				break;
+
+		}
 	}
 }
