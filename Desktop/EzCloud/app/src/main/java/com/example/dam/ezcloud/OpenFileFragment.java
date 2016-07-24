@@ -32,13 +32,11 @@ public class OpenFileFragment extends MyBasicFragment
 	Activity activity;
 	Button choseFile, saveFile, upLoadFile;
 	static EditText et1;
-
 	public OpenFileFragment(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, Context context, Activity activity)
 	{
 		super(inflater, container, savedInstanceState, context);
 		this.activity = activity;
 	}
-
 	@Override
 	public View onCreate()
 	{
@@ -48,7 +46,6 @@ public class OpenFileFragment extends MyBasicFragment
 		saveFile = (Button) rootView.findViewById(R.id.save_file);
 		upLoadFile = (Button) rootView.findViewById(R.id.upload_file);
 		et1 = (EditText) rootView.findViewById(R.id.opened_file);
-
 		choseFile.setOnClickListener(new ChoseFileOnClick());
 		saveFile.setOnClickListener(new SaveFileOnClick());
 		upLoadFile.setOnClickListener(new UpLoadFileOnClick());

@@ -22,12 +22,10 @@ public class DirectoryChooserPushSubFragment extends Activity implements Directo
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.dialog);
 		final DirectoryChooserConfig config = DirectoryChooserConfig.builder()
-				.newDirectoryName("DialogSample")
-				.build();
+			.newDirectoryName("DialogSample")
+			.build();
 		mDialog = DirectoryChooserFragment.newInstance(config);
-
 		mDirectoryTextView = (TextView) findViewById(R.id.textDirectory);
-
 		findViewById(R.id.btnChoose).setOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -37,7 +35,6 @@ public class DirectoryChooserPushSubFragment extends Activity implements Directo
 			}
 		});
 	}
-
 	@Override
 	public void onSelectDirectory(@NonNull String path)
 	{

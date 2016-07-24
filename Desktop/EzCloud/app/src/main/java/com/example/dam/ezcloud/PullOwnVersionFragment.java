@@ -29,12 +29,10 @@ public class PullOwnVersionFragment extends MyBasicFragment
 		editText2 = (EditText) rootView.findViewById(R.id.select_version);
 		Button btn1 = (Button) rootView.findViewById(R.id.btn_pull_version);
 		btn1.setOnClickListener(new Btn1OnClickListener());
-
 		return rootView;
 	}
 	public class Btn1OnClickListener implements View.OnClickListener
 	{
-
 		@Override
 		public void onClick(View v)
 		{
@@ -50,7 +48,6 @@ public class PullOwnVersionFragment extends MyBasicFragment
 				}
 			});
 			downloadFileFTP.execute();
-
 			Toast.makeText(context, "Folder successfully saved with path= " + path, Toast.LENGTH_SHORT).show();
 		}
 	}

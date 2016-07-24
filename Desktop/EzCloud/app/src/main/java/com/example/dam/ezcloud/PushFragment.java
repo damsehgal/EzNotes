@@ -39,16 +39,13 @@ public class PushFragment extends MyBasicFragment
 	}
 	public class OpenDirectoryOnClickListener implements View.OnClickListener
 	{
-
 		@Override
 		public void onClick(View v)
 		{
-
 			final Intent chooserIntent = new Intent(context, DirectoryChooserActivity.class);
 			final DirectoryChooserConfig config = DirectoryChooserConfig.builder().newDirectoryName("DirChooserSample").allowReadOnlyDirectory(true).allowNewDirectoryNameModification(true).build();
 			chooserIntent.putExtra(DirectoryChooserActivity.EXTRA_CONFIG, config);
 			activity.startActivityForResult(chooserIntent, REQUEST_DIRECTORY);
-
 		}
 	}
 }

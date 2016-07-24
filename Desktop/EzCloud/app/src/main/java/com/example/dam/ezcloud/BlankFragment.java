@@ -1,6 +1,5 @@
 package com.example.dam.ezcloud;
 //TODO ADD PERMISSION FOR MARSHMALLOW
-
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,35 +14,26 @@ public class BlankFragment extends Fragment
 	int position;
 	static Uri uri;
 	OnCreateViewCalledListener ocvcl;
-
 	public void setOnCreateViewCalledListener(OnCreateViewCalledListener ocvcListener)
 	{
 		ocvcl = ocvcListener;
 	}
-
-
 	public void setPosition(int position)
 	{
 		this.position = position;
 	}
-
 	public Uri getUri()
 	{
 		return uri;
 	}
-
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-
 	}
-
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-
 		Log.e("Fragment", "onCreateView: Called");
 		if (position == 0)
 		{
@@ -54,19 +44,16 @@ public class BlankFragment extends Fragment
 		{
 			Log.e("pos1", "onCreateView: ");
 			return new OpenFileFragment(inflater, container, savedInstanceState, getContext(), getActivity()).onCreate();
-
 		}
 		else if (position == 2)
 		{
 			//TODO PUSH
 			return new PushFragment(inflater, container, savedInstanceState, getContext(), getActivity()).onCreate();
-
 		}
 		else if (position == 3)
 		{
 			// TODO PUSH REQUEST
 			return new PushRequestFragment(inflater, container, savedInstanceState, getContext()).onCreate();
-
 		}
 		else if (position == 4)
 		{
@@ -81,7 +68,6 @@ public class BlankFragment extends Fragment
 		{
 			//TODO SEND MERGE REQUEST
 			return new SendMergeRequestFragment(inflater, container, savedInstanceState, getContext()).onCreate();
-
 		}
 		else if (position == 7)
 		{
@@ -91,13 +77,9 @@ public class BlankFragment extends Fragment
 		{
 			return new LogoutFragment(inflater, container, savedInstanceState, getContext(), getActivity()).onCreate();
 		}
-
 	}
-
 	public interface OnCreateViewCalledListener
 	{
 		void onCreateViewCalled(int position);
 	}
-
-
 }

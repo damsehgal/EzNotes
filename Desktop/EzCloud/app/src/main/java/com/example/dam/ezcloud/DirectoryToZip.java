@@ -20,7 +20,6 @@ public class DirectoryToZip extends AsyncTask<String, Void, String>
 {
 	Boolean isSuccessfulyZipped;
 	String temp;
-
 	@Override
 	protected String doInBackground(String... params)
 	{
@@ -29,26 +28,21 @@ public class DirectoryToZip extends AsyncTask<String, Void, String>
 		Log.d("TAG", "doInBackground: " + params[1]);
 		return params[0];
 	}
-
 	OnTaskDoneListener onTaskDoneListener;
-
 	public DirectoryToZip(OnTaskDoneListener onTaskDoneListener)
 	{
 		this.onTaskDoneListener = onTaskDoneListener;
 	}
-
 	public boolean zipFileAtPath(String sourcePath, String toLocation)
 	{
 		final int BUFFER = 2048;
-
 		File sourceFile = new File(sourcePath);
 		try
 		{
 			BufferedInputStream origin = null;
 			FileOutputStream dest = new FileOutputStream(toLocation);
-
 			ZipOutputStream out = new ZipOutputStream(new BufferedOutputStream(
-					dest));
+				dest));
 			if (sourceFile.isDirectory())
 			{
 				zipSubFolder(out, sourceFile, sourceFile.getParent().length());
@@ -75,13 +69,9 @@ public class DirectoryToZip extends AsyncTask<String, Void, String>
 		}
 		return true;
 	}
-
-
 	private void zipSubFolder(ZipOutputStream out, File folder, int basePathLength) throws IOException
 	{
-
 		final int BUFFER = 2048;
-
 		File[] fileList = folder.listFiles();
 		BufferedInputStream origin = null;
 		for (File file : fileList)
@@ -95,7 +85,7 @@ public class DirectoryToZip extends AsyncTask<String, Void, String>
 				byte data[] = new byte[BUFFER];
 				String unmodifiedFilePath = file.getPath();
 				String relativePath = unmodifiedFilePath
-						.substring(basePathLength);
+					.substring(basePathLength);
 				FileInputStream fi = new FileInputStream(unmodifiedFilePath);
 				origin = new BufferedInputStream(fi, BUFFER);
 				ZipEntry entry = new ZipEntry(relativePath);
@@ -109,7 +99,6 @@ public class DirectoryToZip extends AsyncTask<String, Void, String>
 			}
 		}
 	}
-
 	public String getLastPathComponent(String filePath)
 	{
 		String[] segments = filePath.split("/");
@@ -118,12 +107,10 @@ public class DirectoryToZip extends AsyncTask<String, Void, String>
 		String lastPathComponent = segments[segments.length - 1];
 		return lastPathComponent;
 	}
-
 	public interface OnTaskDoneListener
 	{
 		void onTaskDone(boolean flag, String path);
 	}
-
 	@Override
 	protected void onPostExecute(String s)
 	{

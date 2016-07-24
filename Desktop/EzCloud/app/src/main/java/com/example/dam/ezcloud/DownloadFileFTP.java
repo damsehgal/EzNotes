@@ -23,15 +23,11 @@ public class DownloadFileFTP extends AsyncTask<Void, Void, String>
 		this.fileName = fileName;
 		this.onFileDownloadListener = onFileDownloadListener;
 	}
-
-
 	public void getData()
 	{
-
 		Log.e("TAG", "getData: " + fileName);
 		String url = "http://ezcloud.esy.es/ezCloudWebsite/" + Home.userName + "/" + fileName + ".zip";
 		Log.e("TAG", "getData: " + url);
-
 		String path = Environment.getExternalStorageDirectory() + "/" + fileName + ".zip";
 		DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
 		Uri uri = Uri.parse(url);
@@ -43,21 +39,18 @@ public class DownloadFileFTP extends AsyncTask<Void, Void, String>
 		request.setDestinationUri(pathUri);
 		downloadManager.enqueue(request);
 	}
-
 	@Override
 	protected String doInBackground(Void... params)
 	{
 		getData();
 		return Environment.getExternalStorageDirectory() + "/" + fileName + ".zip";
 	}
-
 	@Override
 	protected void onPostExecute(String s)
 	{
 		onFileDownloadListener.onFileDownload(s);
 		super.onPostExecute(s);
 	}
-
 	public interface OnFileDownloadListener
 	{
 		void onFileDownload(String path);

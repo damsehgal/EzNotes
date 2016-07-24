@@ -1,17 +1,15 @@
 package com.example.dam.ezcloud;
-
 /**
  * Created by dam on 23/7/16.
  */
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,7 +24,6 @@ public class MainActivity extends AppCompatActivity
 	public static final String PASSWORD_KEY = "zdksanO;aslkaaddav";
 	Button login, signUp;
 	EditText userId, passWord;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -56,7 +53,6 @@ public class MainActivity extends AppCompatActivity
 					@Override
 					public String onTaskDone(String str)
 					{
-
 						Log.e("Main Activity", "onTaskDone: " + str);
 						try
 						{
@@ -64,7 +60,6 @@ public class MainActivity extends AppCompatActivity
 							String[] userInfo = str.split("<br>");
 							for (String temp : userInfo)
 								Log.e("MainActivity", "onTaskDone: " + temp);
-
 							Intent intent = new Intent(MainActivity.this, Home.class);
 							intent.putExtra(USERNAME_KEY, userInfo[0]);
 							intent.putExtra(PASSWORD_KEY, userInfo[1]);
@@ -101,16 +96,12 @@ public class MainActivity extends AppCompatActivity
 			Log.e("not ", "onCreate: ");
 			Toast.makeText(MainActivity.this, "Plz check your internet connection", Toast.LENGTH_SHORT).show();
 		}
-
-
 	}
-
 	public class LoginOnClick implements View.OnClickListener
 	{
 		@Override
 		public void onClick(View v)
 		{
-
 			if (userId.getText().toString().isEmpty() || passWord.getText().toString().isEmpty())
 				Toast.makeText(MainActivity.this, "Plz fill all the fields", Toast.LENGTH_SHORT).show();
 			else
@@ -131,7 +122,6 @@ public class MainActivity extends AppCompatActivity
 						{
 							SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
 							SharedPreferences.Editor ed = sharedPreferences.edit();
-
 							ed.putString("sess_ID", str.substring(8));
 							ed.commit();
 							Intent intent = new Intent(MainActivity.this, Home.class);
@@ -148,13 +138,11 @@ public class MainActivity extends AppCompatActivity
 							Toast.makeText(MainActivity.this, "Password is Incorrect", Toast.LENGTH_SHORT).show();
 						}
 						return str;
-
 					}
 				});
 			}
 		}
 	}
-
 	public boolean checkSessionIDInSharedPrefs()
 	{
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
@@ -162,7 +150,6 @@ public class MainActivity extends AppCompatActivity
 		Log.e("MainActivity", "checkSessionIDInSharedPrefs: " + sess_ID);
 		return !sess_ID.equals("");
 	}
-
 	public class SignUpOnClick implements View.OnClickListener
 	{
 		@Override
@@ -193,7 +180,6 @@ public class MainActivity extends AppCompatActivity
 							Toast.makeText(MainActivity.this, "ID created plz Login", Toast.LENGTH_SHORT).show();
 						}
 						return str;
-
 					}
 				});
 			}

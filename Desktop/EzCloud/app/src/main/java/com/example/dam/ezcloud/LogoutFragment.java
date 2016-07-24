@@ -44,11 +44,9 @@ public class LogoutFragment extends MyBasicFragment
 				Intent intent = new Intent(context, MainActivity.class);
 				activity.startActivity(intent);
 				return null;
-
 			}
 		});
 		prs.execute();
-
 		return getRootView(R.layout.openfile);
 	}
 }

@@ -32,19 +32,16 @@ public class CreateNewRepoWithPush extends MyBasicFragment
 		EditText path = ((EditText) rootView.findViewById(R.id.folder_path_create));
 		Button btnCreateNewRepo = (Button) rootView.findViewById(R.id.btn_create_new_repo);
 		btnCreateNewRepo.setOnClickListener(new CreateNewRepoOnClick(path, repoName));
-
 		return rootView;
 	}
 	public class CreateNewRepoOnClick implements View.OnClickListener
 	{
 		EditText path, repoName;
-
 		public CreateNewRepoOnClick(EditText path, EditText repoName)
 		{
 			this.path = path;
 			this.repoName = repoName;
 		}
-
 		@Override
 		public void onClick(View v)
 		{
@@ -53,7 +50,6 @@ public class CreateNewRepoWithPush extends MyBasicFragment
 				@Override
 				public void onTaskDone(boolean flag, final String path)
 				{
-
 					Log.e("TAG", "onTaskDone: " + flag);
 					if (flag)
 					{
@@ -67,14 +63,12 @@ public class CreateNewRepoWithPush extends MyBasicFragment
 							@Override
 							public String onTaskDone(String str)
 							{
-
 								Log.e("onTaskDone", "onTaskDone: " + path + " " + str);
 								new UploadFile(path, context).execute(str.split("\\s+")[str.split("\\s+").length - 1], repoName.getText().toString());
 								return null;
 							}
 						});
 						prs.execute();
-
 					}
 					else
 					{

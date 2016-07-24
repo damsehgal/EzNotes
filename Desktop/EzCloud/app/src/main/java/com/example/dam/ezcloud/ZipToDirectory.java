@@ -18,11 +18,9 @@ import java.util.zip.ZipInputStream;
 public class ZipToDirectory extends AsyncTask<String, Void, Void>
 {
 	private static final String TAG = ZipToDirectory.class.getSimpleName();
-
 	@Override
 	protected Void doInBackground(String... params)
 	{
-
 		try
 		{
 			unzip(new File(params[0]), new File(params[1]));
@@ -34,10 +32,8 @@ public class ZipToDirectory extends AsyncTask<String, Void, Void>
 		}
 		return null;
 	}
-
 	private void unzip(File zipFile, File targetDirectory) throws IOException
 	{
-
 		ZipInputStream zis = new ZipInputStream(new BufferedInputStream(new FileInputStream(zipFile)));
 		try
 		{
@@ -51,7 +47,7 @@ public class ZipToDirectory extends AsyncTask<String, Void, Void>
 				File dir = ze.isDirectory() ? file : file.getParentFile();
 				if (!dir.isDirectory() && !dir.mkdirs())
 					throw new FileNotFoundException("Failed to ensure directory: " +
-							dir.getAbsolutePath());
+						dir.getAbsolutePath());
 				if (ze.isDirectory())
 					continue;
 				FileOutputStream fout = new FileOutputStream(file);
@@ -64,7 +60,7 @@ public class ZipToDirectory extends AsyncTask<String, Void, Void>
 				{
 					fout.close();
 				}
-		    /* if time should be restored as well
+			/* if time should be restored as well
             long time = ze.getTime();
             if (time > 0)
                 file.setLastModified(time);

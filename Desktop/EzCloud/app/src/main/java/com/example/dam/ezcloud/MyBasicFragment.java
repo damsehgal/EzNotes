@@ -15,10 +15,8 @@ public abstract class MyBasicFragment
 	ViewGroup container;
 	Bundle savedInstanceState;
 	Context context;
-
 	public MyBasicFragment(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, Context context)
 	{
-
 		this.inflater = inflater;
 		this.container = container;
 		this.savedInstanceState = savedInstanceState;
@@ -27,7 +25,6 @@ public abstract class MyBasicFragment
 	public View getRootView(int layout)
 	{
 		return inflater.inflate(layout, container, false);
-
 	}
 	public abstract View onCreate();
 }

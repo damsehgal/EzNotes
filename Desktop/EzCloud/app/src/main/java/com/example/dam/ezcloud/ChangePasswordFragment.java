@@ -35,7 +35,6 @@ public class ChangePasswordFragment extends MyBasicFragment
 			@Override
 			public void onClick(View v)
 			{
-
 				Log.e("called", "onClick: ");
 				if (currentPassword.getText().toString().equals(Home.passWord) && newPassword.getText().toString().equals(confirmPassword.getText().toString()))
 				{
@@ -72,5 +71,4 @@ public class ChangePasswordFragment extends MyBasicFragment
 		changePass.execute();
 		return password;
 	}
-
 }
