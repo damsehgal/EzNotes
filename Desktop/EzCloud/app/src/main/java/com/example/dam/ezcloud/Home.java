@@ -22,6 +22,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.rdrei.android.dirchooser.DirectoryChooserActivity;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -132,6 +134,17 @@ public class Home extends AppCompatActivity
 				}
 
 				break;
+			case PushFragment.REQUEST_DIRECTORY:
+				Log.i("TAG", String.format("Return from DirChooser with result %d", resultCode));
+				if (resultCode == DirectoryChooserActivity.RESULT_CODE_DIR_SELECTED)
+				{
+					PushFragment.directoryName.setText(data.getStringExtra(DirectoryChooserActivity.RESULT_SELECTED_DIR));
+				}
+				else
+				{
+					PushFragment.directoryName.setText("nothing selected");
+				}
+
 
 		}
 	}

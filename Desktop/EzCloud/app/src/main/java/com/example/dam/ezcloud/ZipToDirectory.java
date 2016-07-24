@@ -26,7 +26,7 @@ public class ZipToDirectory extends AsyncTask<String, Void, Void>
 		try
 		{
 			unzip(new File(params[0]), new File(params[1]));
-			Log.e(TAG, "doInBackground: "+ params[0] + " " +params[1] );
+			Log.e(TAG, "doInBackground: " + params[0] + " " + params[1]);
 		}
 		catch (IOException e)
 		{
@@ -46,7 +46,7 @@ public class ZipToDirectory extends AsyncTask<String, Void, Void>
 			byte[] buffer = new byte[8192];
 			while ((ze = zis.getNextEntry()) != null)
 			{
-				Log.d(TAG, "unzip: " + zipFile.getAbsolutePath() + " " + targetDirectory.getAbsolutePath() );
+				Log.d(TAG, "unzip: " + zipFile.getAbsolutePath() + " " + targetDirectory.getAbsolutePath());
 				File file = new File(targetDirectory, ze.getName());
 				File dir = ze.isDirectory() ? file : file.getParentFile();
 				if (!dir.isDirectory() && !dir.mkdirs())
@@ -64,7 +64,7 @@ public class ZipToDirectory extends AsyncTask<String, Void, Void>
 				{
 					fout.close();
 				}
-	        /* if time should be restored as well
+		    /* if time should be restored as well
             long time = ze.getTime();
             if (time > 0)
                 file.setLastModified(time);

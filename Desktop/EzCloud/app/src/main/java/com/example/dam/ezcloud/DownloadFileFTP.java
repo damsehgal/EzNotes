@@ -12,12 +12,12 @@ import java.io.File;
 /**
  * Created by dam on 9/7/16.
  */
-public class DownloadFileFTP extends AsyncTask<Void,Void,String>
+public class DownloadFileFTP extends AsyncTask<Void, Void, String>
 {
 	Context context;
 	String fileName;
 	OnFileDownloadListener onFileDownloadListener;
-	public DownloadFileFTP(Context context, String fileName , OnFileDownloadListener onFileDownloadListener)
+	public DownloadFileFTP(Context context, String fileName, OnFileDownloadListener onFileDownloadListener)
 	{
 		this.context = context;
 		this.fileName = fileName;
@@ -28,11 +28,11 @@ public class DownloadFileFTP extends AsyncTask<Void,Void,String>
 	public void getData()
 	{
 
-		Log.e("TAG", "getData: " + fileName );
-		String url = "http://ezcloud.esy.es/ezCloudWebsite/" + Home.userName + "/" + fileName+ ".zip";
-		Log.e("TAG", "getData: "+url );
+		Log.e("TAG", "getData: " + fileName);
+		String url = "http://ezcloud.esy.es/ezCloudWebsite/" + Home.userName + "/" + fileName + ".zip";
+		Log.e("TAG", "getData: " + url);
 
-		String path = Environment.getExternalStorageDirectory()+"/"+fileName+".zip";
+		String path = Environment.getExternalStorageDirectory() + "/" + fileName + ".zip";
 		DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
 		Uri uri = Uri.parse(url);
 		DownloadManager.Request request = new DownloadManager.Request(uri);
@@ -48,7 +48,7 @@ public class DownloadFileFTP extends AsyncTask<Void,Void,String>
 	protected String doInBackground(Void... params)
 	{
 		getData();
-		return Environment.getExternalStorageDirectory()+"/"+fileName + ".zip";
+		return Environment.getExternalStorageDirectory() + "/" + fileName + ".zip";
 	}
 
 	@Override

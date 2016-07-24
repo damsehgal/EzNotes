@@ -21,7 +21,7 @@ public class ChangePasswordFragment extends MyBasicFragment
 {
 	public ChangePasswordFragment(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, Context context)
 	{
-		super(inflater,container,savedInstanceState,context);
+		super(inflater, container, savedInstanceState, context);
 	}
 	public View onCreate()
 	{

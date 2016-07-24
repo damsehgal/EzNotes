@@ -59,7 +59,7 @@ public class BlankFragment extends Fragment
 		else if (position == 2)
 		{
 			//TODO PUSH
-			return new PushFragment(inflater, container, savedInstanceState, getContext()).onCreate();
+			return new PushFragment(inflater, container, savedInstanceState, getContext(), getActivity()).onCreate();
 
 		}
 		else if (position == 3)
@@ -80,16 +80,16 @@ public class BlankFragment extends Fragment
 		else if (position == 6)
 		{
 			//TODO SEND MERGE REQUEST
-			return new SendMergeRequestFragment(inflater,container,savedInstanceState,getContext()).onCreate();
+			return new SendMergeRequestFragment(inflater, container, savedInstanceState, getContext()).onCreate();
 
 		}
 		else if (position == 7)
 		{
-			return new CreateNewRepoWithPush(inflater,container,savedInstanceState,getContext()).onCreate();
+			return new CreateNewRepoWithPush(inflater, container, savedInstanceState, getContext()).onCreate();
 		}
 		else
 		{
-			return new LogoutFragment(inflater,container,savedInstanceState,getContext(),getActivity()).onCreate();
+			return new LogoutFragment(inflater, container, savedInstanceState, getContext(), getActivity()).onCreate();
 		}
 
 	}
@@ -98,7 +98,6 @@ public class BlankFragment extends Fragment
 	{
 		void onCreateViewCalled(int position);
 	}
-
 
 
 }

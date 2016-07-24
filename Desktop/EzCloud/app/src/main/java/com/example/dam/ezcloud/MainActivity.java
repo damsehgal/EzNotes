@@ -3,6 +3,7 @@ package com.example.dam.ezcloud;
 /**
  * Created by dam on 23/7/16.
  */
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -46,9 +47,9 @@ public class MainActivity extends AppCompatActivity
 			{
 				String sessID = PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getString("sess_ID", "");
 				Log.e("isLoggedIn", "onCreate: " + sessID);
-				HashMap<String , String> hashMap =  new HashMap<>();
-				hashMap.put("sess_id" , sessID);
-				hashMap.put("device", Settings.Secure.getString(this.getContentResolver(),Settings.Secure.ANDROID_ID) );
+				HashMap<String, String> hashMap = new HashMap<>();
+				hashMap.put("sess_id", sessID);
+				hashMap.put("device", Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID));
 				PostRequestSend postRequestSend = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/index_app.php?", hashMap);
 				postRequestSend.setTaskDoneListener(new PostRequestSend.TaskDoneListener()
 				{
@@ -61,19 +62,19 @@ public class MainActivity extends AppCompatActivity
 						{
 							Log.e("MainActivity is Logge", "onTaskDone: " + str);
 							String[] userInfo = str.split("<br>");
-							for(String temp : userInfo)
-								Log.e("MainActivity", "onTaskDone: " + temp );
+							for (String temp : userInfo)
+								Log.e("MainActivity", "onTaskDone: " + temp);
 
 							Intent intent = new Intent(MainActivity.this, Home.class);
 							intent.putExtra(USERNAME_KEY, userInfo[0]);
 							intent.putExtra(PASSWORD_KEY, userInfo[1]);
-							PreferenceManager.getDefaultSharedPreferences(MainActivity.this).edit().putString("sess_ID",userInfo[2]).commit();
+							PreferenceManager.getDefaultSharedPreferences(MainActivity.this).edit().putString("sess_ID", userInfo[2]).commit();
 							startActivity(intent);
 						}
 						catch (IndexOutOfBoundsException e)
 						{
 							// Session Id is expired
-							PreferenceManager.getDefaultSharedPreferences(MainActivity.this).edit().putString("sess_ID","").commit();
+							PreferenceManager.getDefaultSharedPreferences(MainActivity.this).edit().putString("sess_ID", "").commit();
 							recreate();
 						}
 						return null;
@@ -114,18 +115,18 @@ public class MainActivity extends AppCompatActivity
 				Toast.makeText(MainActivity.this, "Plz fill all the fields", Toast.LENGTH_SHORT).show();
 			else
 			{
-				HashMap<String , String> hashMap =  new HashMap<>();
-				hashMap.put("username" ,userId.getText().toString() );
-				hashMap.put("password" , passWord.getText().toString());
-				hashMap.put("device" , Settings.Secure.getString(MainActivity.this.getContentResolver(),Settings.Secure.ANDROID_ID) );
-				PostRequestSend postRequestSend = new PostRequestSend( "http://ezcloud.esy.es/ezCloudWebsite/index_app.php?",hashMap);
+				HashMap<String, String> hashMap = new HashMap<>();
+				hashMap.put("username", userId.getText().toString());
+				hashMap.put("password", passWord.getText().toString());
+				hashMap.put("device", Settings.Secure.getString(MainActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID));
+				PostRequestSend postRequestSend = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/index_app.php?", hashMap);
 				postRequestSend.execute();
 				postRequestSend.setTaskDoneListener(new PostRequestSend.TaskDoneListener()
 				{
 					@Override
 					public String onTaskDone(String str)
 					{
-						Log.e("Main Activity", "onTaskDone: " + str + " " );
+						Log.e("Main Activity", "onTaskDone: " + str + " ");
 						if (str.charAt(0) == 't')
 						{
 							SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
@@ -171,11 +172,11 @@ public class MainActivity extends AppCompatActivity
 				Toast.makeText(MainActivity.this, "Plz fill all the fields", Toast.LENGTH_SHORT).show();
 			else
 			{
-				HashMap <String , String> hashMap =  new HashMap<>();
-				hashMap.put("username" , userId.getText().toString());
-				hashMap.put("password",passWord.getText().toString());
-				hashMap.put("device" , Settings.Secure.getString(MainActivity.this.getContentResolver(),Settings.Secure.ANDROID_ID) );
-				PostRequestSend postRequestSend = new PostRequestSend( "http://ezcloud.esy.es/ezCloudWebsite/signup_app.php?",hashMap);
+				HashMap<String, String> hashMap = new HashMap<>();
+				hashMap.put("username", userId.getText().toString());
+				hashMap.put("password", passWord.getText().toString());
+				hashMap.put("device", Settings.Secure.getString(MainActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID));
+				PostRequestSend postRequestSend = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/signup_app.php?", hashMap);
 				postRequestSend.execute();
 				postRequestSend.setTaskDoneListener(new PostRequestSend.TaskDoneListener()
 				{

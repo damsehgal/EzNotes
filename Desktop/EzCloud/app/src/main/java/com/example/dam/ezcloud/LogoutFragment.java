@@ -19,7 +19,7 @@ import java.util.HashMap;
 public class LogoutFragment extends MyBasicFragment
 {
 	Activity activity;
-	public LogoutFragment(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, Context context,Activity activity)
+	public LogoutFragment(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, Context context, Activity activity)
 	{
 		super(inflater, container, savedInstanceState, context);
 		this.activity = activity;
