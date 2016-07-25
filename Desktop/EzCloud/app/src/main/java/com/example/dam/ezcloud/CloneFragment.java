@@ -10,9 +10,9 @@ import android.view.ViewGroup;
  * Created by dam on 25/7/16.
  */
 //TODO FORK
-public class ForkFragment extends MyBasicFragment
+public class CloneFragment extends MyBasicFragment
 {
-	public ForkFragment(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, Context context)
+	public CloneFragment(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, Context context)
 	{
 		super(inflater, container, savedInstanceState, context);
 	}

@@ -9,7 +9,8 @@ import android.view.ViewGroup;
 /**
  * Created by dam on 25/7/16.
  */
-// TODO PUSH REQUEST
+// TODO RECEIVE PUSH REQUEST
+// Create chat Database
 public class PushRequestFragment extends MyBasicFragment
 {
 	public PushRequestFragment(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, Context context)

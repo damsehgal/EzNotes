@@ -38,7 +38,7 @@ public class Home extends AppCompatActivity
 		setContentView(R.layout.activity_home);
 		ArrayAdapter<String> mAdapter;
 		mDrawerList = (ListView) findViewById(R.id.navList);
-		String[] osArray = {"CHANGE PASSWORD", "OPEN FILE", "PUSH REQUEST", "FORK", "PULL VERSION", "MERGE REQUEST", "Create New", "LOGOUT"};
+		String[] osArray = {"CHANGE PASSWORD", "OPEN FILE", "PUSH REQUEST", "CLONE", "PULL VERSION", "MERGE REQUEST", "Create New", "LOGOUT"};
 		mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
 		mDrawerList.setAdapter(mAdapter);
 		mDrawerList.setOnItemClickListener(new MyOnItemClickListener());

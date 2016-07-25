@@ -48,13 +48,14 @@ public class BlankFragment extends Fragment
 
 		else if (position == 2)
 		{
-			// TODO PUSH REQUEST
+			// TODO RECIEVE PUSH REQUESTS ...
 			return new PushRequestFragment(inflater, container, savedInstanceState, getContext()).onCreate();
 		}
 		else if (position == 3)
 		{
-			//TODO FORK
-			return new ForkFragment(inflater, container, savedInstanceState, getContext()).onCreate();
+			//TODO CLONE
+			// i.e clone a repository || take a repository and place it in my database
+			return new CloneFragment(inflater, container, savedInstanceState, getContext()).onCreate();
 		}
 		else if (position == 4)
 		{
