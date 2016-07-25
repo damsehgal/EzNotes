@@ -17,7 +17,11 @@
         android:hint="Repo Name"
         android:id="@+id/repo_name_create"
         />
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_chose_directory"
+        android:text="chose directory"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

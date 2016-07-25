@@ -12,7 +12,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import net.rdrei.android.dirchooser.DirectoryChooserActivity;
@@ -36,7 +38,7 @@ public class Home extends AppCompatActivity
 		setContentView(R.layout.activity_home);
 		ArrayAdapter<String> mAdapter;
 		mDrawerList = (ListView) findViewById(R.id.navList);
-		String[] osArray = {"CHANGE PASSWORD", "OPEN FILE", "PUSH", "PUSH REQUEST", "FORK", "PULL VERSION", "MERGE REQUEST", "Create New", "LOGOUT"};
+		String[] osArray = {"CHANGE PASSWORD", "OPEN FILE", "PUSH REQUEST", "FORK", "PULL VERSION", "MERGE REQUEST", "Create New", "LOGOUT"};
 		mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
 		mDrawerList.setAdapter(mAdapter);
 		mDrawerList.setOnItemClickListener(new MyOnItemClickListener());
@@ -81,16 +83,12 @@ public class Home extends AppCompatActivity
 					Log.e("dsaasd", "onActivityResult: ");
 				}
 				break;
-			case PushFragment.REQUEST_DIRECTORY:
-				Log.i("TAG", String.format("Return from DirChooser with result %d", resultCode));
+			case CreateNewRepoWithPush.REQUEST_DIRECTORY_PUSH:
 				if (resultCode == DirectoryChooserActivity.RESULT_CODE_DIR_SELECTED)
-				{
-					PushFragment.directoryName.setText(data.getStringExtra(DirectoryChooserActivity.RESULT_SELECTED_DIR));
-				}
+					CreateNewRepoWithPush.path.setText(data.getStringExtra(DirectoryChooserActivity.RESULT_SELECTED_DIR));
 				else
-				{
-					PushFragment.directoryName.setText("nothing selected");
-				}
+					CreateNewRepoWithPush.path.setText("nothing selected");
+				break;
 		}
 	}
 

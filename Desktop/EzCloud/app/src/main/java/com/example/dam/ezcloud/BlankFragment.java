@@ -45,33 +45,29 @@ public class BlankFragment extends Fragment
 			Log.e("pos1", "onCreateView: ");
 			return new OpenFileFragment(inflater, container, savedInstanceState, getContext(), getActivity()).onCreate();
 		}
+
 		else if (position == 2)
-		{
-			//TODO PUSH
-			return new PushFragment(inflater, container, savedInstanceState, getContext(), getActivity()).onCreate();
-		}
-		else if (position == 3)
 		{
 			// TODO PUSH REQUEST
 			return new PushRequestFragment(inflater, container, savedInstanceState, getContext()).onCreate();
 		}
-		else if (position == 4)
+		else if (position == 3)
 		{
 			//TODO FORK
 			return new ForkFragment(inflater, container, savedInstanceState, getContext()).onCreate();
 		}
-		else if (position == 5)
+		else if (position == 4)
 		{
 			return new PullOwnVersionFragment(inflater, container, savedInstanceState, getContext()).onCreate();
 		}
-		else if (position == 6)
+		else if (position == 5)
 		{
 			//TODO SEND MERGE REQUEST
 			return new SendMergeRequestFragment(inflater, container, savedInstanceState, getContext()).onCreate();
 		}
-		else if (position == 7)
+		else if (position == 6)
 		{
-			return new CreateNewRepoWithPush(inflater, container, savedInstanceState, getContext()).onCreate();
+			return new CreateNewRepoWithPush(inflater, container, savedInstanceState, getContext(),getActivity()).onCreate();
 		}
 		else
 		{
