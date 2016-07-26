@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">EzCloud</string>
+    <string name="sender_repo_prompt">Sender Repo</string>
+    <string name="receiver_repo_prompt">Receiver Repo</string>
 </resources>

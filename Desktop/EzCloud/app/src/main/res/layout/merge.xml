@@ -8,17 +8,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="To"
+        android:singleLine="true"
         android:id="@+id/edit_text_to"/>
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/spinner_sender_repo"
+        android:spinnerMode="dialog"
+        android:prompt="@string/sender_repo_prompt"
+        android:focusable="true"
         />
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/spinner_receiver_repo"
-
+        android:spinnerMode="dialog"
+        android:prompt="@string/receiver_repo_prompt"
+        android:focusable="true"
         />
     <EditText
         android:layout_width="match_parent"
