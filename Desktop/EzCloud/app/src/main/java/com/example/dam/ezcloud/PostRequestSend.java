@@ -4,6 +4,8 @@ package com.example.dam.ezcloud;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONException;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -101,10 +103,17 @@ public class PostRequestSend extends AsyncTask<String, Void, String>
 	protected void onPostExecute(String s)
 	{
 		super.onPostExecute(s);
-		taskDoneListener.onTaskDone(s);
+		try
+		{
+			taskDoneListener.onTaskDone(s);
+		}
+		catch (JSONException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	public interface TaskDoneListener
 	{
-		String onTaskDone(String str);
+		String onTaskDone(String str) throws JSONException;
 	}
 }
