@@ -16,17 +16,26 @@ public class DownloadFileFTP extends AsyncTask<Void, Void, String>
 {
 	Context context;
 	String fileName;
+	String username;
 	OnFileDownloadListener onFileDownloadListener;
-	public DownloadFileFTP(Context context, String fileName, OnFileDownloadListener onFileDownloadListener)
+	public DownloadFileFTP(Context context, String fileName,OnFileDownloadListener onFileDownloadListener)
+	{
+		this.username = Home.userName;
+		this.context = context;
+		this.fileName = fileName;
+		this.onFileDownloadListener = onFileDownloadListener;
+	}
+	public DownloadFileFTP(Context context, String fileName, String username, OnFileDownloadListener onFileDownloadListener)
 	{
 		this.context = context;
 		this.fileName = fileName;
+		this.username = username;
 		this.onFileDownloadListener = onFileDownloadListener;
 	}
 	public void getData()
 	{
 		Log.e("TAG", "getData: " + fileName);
-		String url = "http://ezcloud.esy.es/ezCloudWebsite/" + Home.userName + "/" + fileName + ".zip";
+		String url = "http://ezcloud.esy.es/ezCloudWebsite/" + username + "/" + fileName + ".zip";
 		Log.e("TAG", "getData: " + url);
 		String path = Environment.getExternalStorageDirectory() + "/" + fileName + ".zip";
 		DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);

@@ -4,19 +4,9 @@
               android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center">
-    <EditText
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Master Username"
-        android:id="@+id/master_username_push_request"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Repository Name"
-        android:id="@+id/repository_name_push_request"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Send push Request"
-        android:id="@+id/send_push_request"/>
+        android:layout_height="match_parent"
+        android:id="@+id/list_view_container">
+    </ListView>
 </LinearLayout>
