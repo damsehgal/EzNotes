@@ -49,51 +49,7 @@ public class Home extends AppCompatActivity
 		userName = intent.getStringExtra(MainActivity.USERNAME_KEY);
 		passWord = intent.getStringExtra(MainActivity.PASSWORD_KEY);
 	}
-	public void onActivityResult(int requestCode, int resultCode, Intent data)
-	{
-		// TODO Auto-generated method stub
-		Log.e("isItCalled", "onActivityResult: ");
-		switch (requestCode)
-		{
-			case OpenFileFragment.PICK_FILE_RESULT_CODE:
-				if (resultCode == Activity.RESULT_OK)
-				{
-					uri = data.getData();
-					Log.e("URI", "onActivityResult: " + uri.toString());
-					String f2 = "";
-					try
-					{
-						BufferedReader buff = new BufferedReader(new InputStreamReader(this.getContentResolver().openInputStream(uri), "UTF-8"));
-						String line;
-						while ((line = buff.readLine()) != null)
-						{
-							f2 += line + "\n";
-						}
-						OpenFileFragment.et1.setText(f2);
-					}
-					catch (FileNotFoundException e)
-					{
-						Toast.makeText(this, "File Not Found", Toast.LENGTH_SHORT).show();
-					}
-					catch (IOException e)
-					{
-						Toast.makeText(this, "IO Exception", Toast.LENGTH_SHORT).show();
-					}
-					Log.e("activity", "onActivityResult: " + f2);
-				}
-				else
-				{
-					Log.e("dsaasd", "onActivityResult: ");
-				}
-				break;
-			case CreateNewRepoWithPush.REQUEST_DIRECTORY_PUSH:
-				if (resultCode == DirectoryChooserActivity.RESULT_CODE_DIR_SELECTED)
-					CreateNewRepoWithPush.path.setText(data.getStringExtra(DirectoryChooserActivity.RESULT_SELECTED_DIR));
-				else
-					CreateNewRepoWithPush.path.setText("nothing selected");
-				break;
-		}
-	}
+
 	public boolean dispatchTouchEvent(MotionEvent event)
 	{
 		if (event.getAction() == MotionEvent.ACTION_DOWN)
@@ -141,4 +97,5 @@ public class Home extends AppCompatActivity
 			((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawer(mDrawerList);
 		}
 	}
+
 }
