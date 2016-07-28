@@ -126,7 +126,6 @@ public class BlankFragment extends Fragment
 
 		else if (position == 2)
 		{
-			// TODO RECIEVE PUSH REQUESTS ...
 			return new PushRequestFragment(inflater, container, savedInstanceState, getContext()).onCreate();
 		}
 		else if (position == 3)
@@ -137,11 +136,11 @@ public class BlankFragment extends Fragment
 		}
 		else if (position == 4)
 		{
+			//Todo Pull Version
 			return new PullOwnVersionFragment(inflater, container, savedInstanceState, getContext()).onCreate();
 		}
 		else if (position == 5)
 		{
-			//TODO SEND MERGE REQUEST
 			return new SendMergeRequestFragment(inflater, container, savedInstanceState, getContext()).onCreate();
 		}
 		else if (position == 6)

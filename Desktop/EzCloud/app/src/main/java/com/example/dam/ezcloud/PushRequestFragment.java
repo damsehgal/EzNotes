@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -103,10 +104,10 @@ public class PushRequestFragment extends MyBasicFragment
 			return 0;
 		}
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent)
+		public View getView(final int position, View convertView, ViewGroup parent)
 		{
 			LayoutInflater layoutInflater =  (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-			MyView myView;
+			final MyView myView;
 			if (convertView == null)
 			{
 				convertView = layoutInflater.inflate(R.layout.messages_received,null);
@@ -132,7 +133,33 @@ public class PushRequestFragment extends MyBasicFragment
 				@Override
 				public void onClick(View v)
 				{
-					//TODO IMPLEMENT DOWNLOAD FILE . . . . . .
+
+					final String[] ver = new String[1];
+					HashMap <String,String> hashMap = new HashMap<String, String>();
+					hashMap.put("username",myView.sender.getText().toString());
+					hashMap.put("reponame",getItem(position).repo_receiver);
+					PostRequestSend postRequestSend = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/get_repo_version.php?",hashMap);
+					postRequestSend.setTaskDoneListener(new PostRequestSend.TaskDoneListener()
+					{
+						@Override
+						public String onTaskDone(String str) throws JSONException
+						{
+							ver[0] = str;
+							String getFileName = getItem(position).repo_receiver + "/" + str + "/" + getItem(position).repo_receiver;
+							DownloadFileFTP downloadFileFTP = new DownloadFileFTP(context, getFileName, myView.sender.getText().toString(), new DownloadFileFTP.OnFileDownloadListener()
+							{
+								@Override
+								public void onFileDownload(String path)
+								{
+									Toast.makeText(context, path, Toast.LENGTH_SHORT).show();
+								}
+							});
+							downloadFileFTP.execute();
+							return null;
+						}
+					});
+					postRequestSend.execute();
+					
 				}
 			});
 			myView.commit.setOnClickListener(new View.OnClickListener()
