@@ -42,9 +42,7 @@ public class PullOwnVersionFragment extends MyBasicFragment
 				@Override
 				public void onFileDownload(String path)
 				{
-					ZipToDirectory zipToDirectory = new ZipToDirectory();
-					zipToDirectory.execute(path, Environment.getExternalStorageDirectory().getAbsolutePath() + "/");
-					Log.e("TAG", "onFileDownload: " + path + " " + Environment.getExternalStorageDirectory().getAbsolutePath() + "/");
+
 				}
 			});
 			downloadFileFTP.execute();

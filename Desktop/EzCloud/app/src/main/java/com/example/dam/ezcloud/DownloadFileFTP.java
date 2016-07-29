@@ -1,13 +1,22 @@
 package com.example.dam.ezcloud;
 
 import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Created by dam on 9/7/16.
@@ -17,6 +26,7 @@ public class DownloadFileFTP extends AsyncTask<Void, Void, String>
 	Context context;
 	String fileName;
 	String username;
+	String path;
 	OnFileDownloadListener onFileDownloadListener;
 	public DownloadFileFTP(Context context, String fileName,OnFileDownloadListener onFileDownloadListener)
 	{
@@ -32,31 +42,54 @@ public class DownloadFileFTP extends AsyncTask<Void, Void, String>
 		this.username = username;
 		this.onFileDownloadListener = onFileDownloadListener;
 	}
-	public void getData()
+
+
+	@Override
+	protected String doInBackground(Void... params)
 	{
 		Log.e("TAG", "getData: " + fileName);
 		String url = "http://ezcloud.esy.es/ezCloudWebsite/" + username + "/" + fileName + ".zip";
 		Log.e("TAG", "getData: " + url);
-		String path = Environment.getExternalStorageDirectory() + "/" + fileName + ".zip";
-		DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-		Uri uri = Uri.parse(url);
-		DownloadManager.Request request = new DownloadManager.Request(uri);
-		request.setAllowedOverMetered(true);
-		request.setAllowedOverRoaming(true);
-		request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
-		Uri pathUri = Uri.fromFile(new File(path));
-		request.setDestinationUri(pathUri);
-		downloadManager.enqueue(request);
-	}
-	@Override
-	protected String doInBackground(Void... params)
-	{
-		getData();
+		path = Environment.getExternalStorageDirectory() + "/" + fileName + ".zip";
+		Log.e("TAG", "doInBackground: " + path );
+		try
+		{
+			URL myFileOnServer = new URL(url);
+			HttpURLConnection httpURLConnection = (HttpURLConnection) myFileOnServer.openConnection();
+			httpURLConnection.setRequestMethod("GET");
+			httpURLConnection.setDoOutput(true);
+			File file = new File(path);
+			if (!file.exists())
+				file.mkdirs();
+			Log.e("TAG", "doInBackground: reached Here" );
+			FileOutputStream fileOutputStream = new FileOutputStream(file);
+			InputStream inputStream = httpURLConnection.getInputStream();
+
+			byte[] buffer = new byte[1024];
+			int bufferLength = 0;
+			while ( (bufferLength = inputStream.read(buffer)) > 0 )
+			{
+				fileOutputStream.write(buffer, 0, bufferLength);
+
+			}
+			fileOutputStream.close();
+			Log.e("TAG", "doInBackground: reached Here2" );
+		}
+		catch (MalformedURLException e)
+		{
+			e.printStackTrace();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 		return Environment.getExternalStorageDirectory() + "/" + fileName + ".zip";
 	}
 	@Override
 	protected void onPostExecute(String s)
 	{
+		Log.e("TAG", "onPostExecute: Am i here" );
+
 		onFileDownloadListener.onFileDownload(s);
 		super.onPostExecute(s);
 	}

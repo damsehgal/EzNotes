@@ -2,6 +2,7 @@ package com.example.dam.ezcloud;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -151,6 +152,10 @@ public class PushRequestFragment extends MyBasicFragment
 								@Override
 								public void onFileDownload(String path)
 								{
+									Log.e(TAG, "onFileDownload: " + path );
+									ZipToDirectory zipToDirectory = new ZipToDirectory();
+									zipToDirectory.execute(path, Environment.getExternalStorageDirectory().getAbsolutePath()+"/"+getItem(position).repo_receiver);
+
 									Toast.makeText(context, path, Toast.LENGTH_SHORT).show();
 								}
 							});
@@ -159,7 +164,7 @@ public class PushRequestFragment extends MyBasicFragment
 						}
 					});
 					postRequestSend.execute();
-					
+
 				}
 			});
 			myView.commit.setOnClickListener(new View.OnClickListener()
