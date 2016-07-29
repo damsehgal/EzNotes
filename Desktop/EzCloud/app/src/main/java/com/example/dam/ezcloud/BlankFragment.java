@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.dd.CircularProgressButton;
 
 import net.rdrei.android.dirchooser.DirectoryChooserActivity;
 import net.rdrei.android.dirchooser.DirectoryChooserConfig;
@@ -53,6 +56,7 @@ public class BlankFragment extends Fragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
+		ocvcl.onCreateViewCalled(position);
 		Log.e("Fragment", "onCreateView: Called");
 		if (position == 0)
 		{
@@ -142,11 +146,13 @@ public class BlankFragment extends Fragment
 		{
 			View rootView = inflater.inflate(R.layout.create_new, container, false);
 			Log.e("Called", "onCreateView: ");
-			Toast.makeText(getContext(), "Called", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getContext(), "Called", Toast.LENGTH_SHORT).show();
 			final EditText repoName = ((EditText) rootView.findViewById(R.id.repo_name_create));
 			path = ((EditText) rootView.findViewById(R.id.folder_path_create));
-			Button btnCreateNewRepo = (Button) rootView.findViewById(R.id.btn_create_new_repo);
-			Button chooseDirectory = (Button) rootView.findViewById(R.id.btn_chose_directory);
+			final CircularProgressButton btnCreateNewRepo = (CircularProgressButton) rootView.findViewById(R.id.btn_create_new_repo);
+			CircularProgressButton chooseDirectory = (CircularProgressButton) rootView.findViewById(R.id.btn_chose_directory);
+			btnCreateNewRepo.setIndeterminateProgressMode(true);
+			btnCreateNewRepo.setProgress(0);
 			chooseDirectory.setOnClickListener(new View.OnClickListener()
 			{
 				@Override
@@ -163,6 +169,7 @@ public class BlankFragment extends Fragment
 				@Override
 				public void onClick(View v)
 				{
+					btnCreateNewRepo.setProgress(50);
 					DirectoryToZip d2z = new DirectoryToZip(new DirectoryToZip.OnTaskDoneListener()
 					{
 						@Override
@@ -183,14 +190,35 @@ public class BlankFragment extends Fragment
 									{
 										Log.e("onTaskDone", "onTaskDone: " + path2 + " " + str);
 										new UploadFile(path2, getContext()).execute(str.split("\\s+")[str.split("\\s+").length - 1], repoName.getText().toString());
+										btnCreateNewRepo.setProgress(100);
+										Handler handler = new Handler();
+										handler.postDelayed(new Runnable()
+										{
+											@Override
+											public void run()
+											{
+												btnCreateNewRepo.setProgress(0);
+											}
+										}, 2000);
 										return null;
 									}
 								});
 								prs.execute();
+
 							}
 							else
 							{
 								Toast.makeText(getContext(), "Make sure your folder is not empty", Toast.LENGTH_SHORT).show();
+								btnCreateNewRepo.setProgress(-1);
+								Handler handler = new Handler();
+								handler.postDelayed(new Runnable()
+								{
+									@Override
+									public void run()
+									{
+										btnCreateNewRepo.setProgress(0);
+									}
+								}, 2000);
 							}
 						}
 					});

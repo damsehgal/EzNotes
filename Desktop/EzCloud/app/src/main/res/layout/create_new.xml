@@ -1,31 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-    android:gravity="center">
+              android:background="#7FFF00"
+              android:gravity="center">
 <EditText
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:hint="Folder Location"
+    android:layout_margin="10dp"
+    android:padding="20dp"
+    android:singleLine="true"
     android:id="@+id/folder_path_create"
     />
 
     <EditText
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Repo Name"
+        android:padding="20dp"
         android:id="@+id/repo_name_create"
         />
-    <Button
+    <!--<com.dd.CircularProgressButton
+        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Login"
+        android:textAllCaps="false"
+        android:id ="@+id/login_btn"
+        android:textColor="#FFFFFF"
+        app:cpb_textComplete="Complete"
+        android:layout_margin="10dp"
+        app:cpb_textError="There was \nan Error"
+        app:cpb_textIdle="LogIn"
+        />
+    -->
+    <com.dd.CircularProgressButton
+        android:layout_width="wrap_content"
+        android:layout_margin="10dp"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        app:cpb_textComplete="Complete"
+        app:cpb_textError="There was \nan Error"
+        app:cpb_textIdle="Chose A Folder"
         android:id="@+id/btn_chose_directory"
         android:text="chose directory"/>
-    <Button
+    <com.dd.CircularProgressButton
         android:layout_width="wrap_content"
+        android:layout_margin="10dp"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
         android:layout_height="wrap_content"
-        android:text="UPLOAD REPO"
+        android:padding="20dp"
+        app:cpb_textComplete="Complete"
+        app:cpb_textError="There was \nan Error"
+        app:cpb_textIdle="Commit ?"
         android:id="@+id/btn_create_new_repo"
         />
 </LinearLayout>

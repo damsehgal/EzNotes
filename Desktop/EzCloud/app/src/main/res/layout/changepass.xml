@@ -5,6 +5,8 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:gravity="center_vertical"
+              android:background="#7FFF00"
+              android:padding="10dp"
     >
 
     <EditText
@@ -13,6 +15,7 @@
         android:hint="curent Password"
         android:id="@+id/curr_pass"
         android:inputType="textPassword"
+
         android:padding="20dp"/>
     <EditText
         android:layout_width="match_parent"
@@ -29,10 +32,12 @@
         android:padding="20dp"
         android:inputType="textPassword"/>
     <com.dd.CircularProgressButton
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:textAllCaps="false"
+
         android:textColor="#FFFFFF"
         android:text="Change\nPassword"
         app:cpb_textComplete="Successfuly Changed"

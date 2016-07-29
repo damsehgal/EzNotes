@@ -2,16 +2,18 @@ package com.example.dam.ezcloud;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.dd.CircularProgressButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,7 +30,7 @@ public class SendMergeRequestFragment extends MyBasicFragment
 	public static final String TAG = SendMergeRequestFragment.class.getSimpleName();
 	Spinner spinnerUserRepo, spinnerToRepo;
 	EditText receiverName, details;
-	Button sendMessage;
+	CircularProgressButton sendMessage;
 	String finalReceiver;
 	String finalUserRepo;
 	String finalReceiverRepo;
@@ -50,8 +52,7 @@ public class SendMergeRequestFragment extends MyBasicFragment
 		spinnerToRepo.requestFocus();
 		receiverName = (EditText) rootView.findViewById(R.id.edit_text_to);
 		details = (EditText) rootView.findViewById(R.id.edit_text_details);
-		sendMessage = (Button) rootView.findViewById(R.id.btn_send_message);
-
+		sendMessage = (CircularProgressButton) rootView.findViewById(R.id.btn_send_message);
 		receiverName.setOnFocusChangeListener(new View.OnFocusChangeListener()
 		{
 			@Override
@@ -65,7 +66,6 @@ public class SendMergeRequestFragment extends MyBasicFragment
 		setSpinnerAdapter(Home.userName, spinnerUserRepo);
 		spinnerToRepo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
 		{
-
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
 			{
@@ -75,7 +75,6 @@ public class SendMergeRequestFragment extends MyBasicFragment
 			@Override
 			public void onNothingSelected(AdapterView<?> parent)
 			{
-
 			}
 		});
 		spinnerUserRepo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
@@ -91,6 +90,8 @@ public class SendMergeRequestFragment extends MyBasicFragment
 				Toast.makeText(context, "Please select ", Toast.LENGTH_SHORT).show();
 			}
 		});
+		sendMessage.setIndeterminateProgressMode(true);
+		sendMessage.setProgress(0);
 		sendMessage.setOnClickListener(new ButtonOnClickListener());
 		return rootView;
 	}
@@ -130,25 +131,49 @@ public class SendMergeRequestFragment extends MyBasicFragment
 		@Override
 		public void onClick(View v)
 		{
-			HashMap <String,String> hash = new HashMap<>();
-			hash.put("sender",Home.userName);
-			hash.put("receiver",finalReceiver);
-			hash.put("repo_sender_name",finalUserRepo);
-			hash.put("repo_receiver_name",finalReceiverRepo);
-			hash.put("details",details.getText().toString());
-			Log.e(TAG, "onClick: really" );
-			PostRequestSend postRequest = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/sendNewMessage.php?",hash);
+			sendMessage.setProgress(50);
+			HashMap<String, String> hash = new HashMap<>();
+			hash.put("sender", Home.userName);
+			hash.put("receiver", finalReceiver);
+			hash.put("repo_sender_name", finalUserRepo);
+			hash.put("repo_receiver_name", finalReceiverRepo);
+			hash.put("details", details.getText().toString());
+			Log.e(TAG, "onClick: really");
+			PostRequestSend postRequest = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/sendNewMessage.php?", hash);
 			postRequest.setTaskDoneListener(new PostRequestSend.TaskDoneListener()
 			{
-
 				@Override
 				public String onTaskDone(String str) throws JSONException
 				{
-					Log.e(TAG, "onTaskDone: am I here ...?" );
-					if(str.charAt(0) == 'n')
+					Log.e(TAG, "onTaskDone: am I here ...?");
+					if (str.charAt(0) == 'n')
+					{
 						Toast.makeText(context, "Message not send", Toast.LENGTH_SHORT).show();
+						sendMessage.setProgress(-1);
+						Handler handler = new Handler();
+						handler.postDelayed(new Runnable()
+						{
+							@Override
+							public void run()
+							{
+								sendMessage.setProgress(0);
+							}
+						}, 2000);
+					}
 					else
+					{
+						sendMessage.setProgress(100);
+						Handler handler = new Handler();
+						handler.postDelayed(new Runnable()
+						{
+							@Override
+							public void run()
+							{
+								sendMessage.setProgress(0);
+							}
+						}, 2000);
 						Toast.makeText(context, "Message successfully send", Toast.LENGTH_SHORT).show();
+					}
 					return null;
 				}
 			});

@@ -1,10 +1,12 @@
 package com.example.dam.ezcloud;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -12,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -25,6 +28,7 @@ import android.widget.TextView;
 public class Home extends AppCompatActivity
 {
 	static String userName, passWord;
+	static ProgressDialog pd ;
 	FragmentManager fragmentManager;
 	FragmentTransaction fragmentTransaction;
 	Uri uri;
@@ -82,6 +86,8 @@ public class Home extends AppCompatActivity
 				@Override
 				public void onCreateViewCalled(int position)
 				{
+					mDrawerLayout.closeDrawer(Gravity.LEFT);
+					Home.pd.hide();
 				}
 			};
 			blankFragment.setPosition(position);
@@ -91,11 +97,16 @@ public class Home extends AppCompatActivity
 			}
 			blankFragment.setOnCreateViewCalledListener(onCreateViewCalledListener);
 			fragmentManager = getSupportFragmentManager();
+
 			fragmentTransaction = fragmentManager.beginTransaction();
 			fragmentTransaction.replace(R.id.frame_layout, blankFragment, null);
 			Log.e("HOME", "onClick: " + userName + " " + passWord);
+			pd = new ProgressDialog(Home.this);
+			pd.setMessage("loading");
+			pd.show();
 			fragmentTransaction.commit();
-			((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawer(mDrawerList);
+
+
 		}
 	}
 }

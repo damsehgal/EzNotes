@@ -3,22 +3,35 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:layout_gravity="center"
+              android:padding="10dp"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
+              android:background="#7FFF00"
               tools:context="com.example.dam.ezcloud.MainActivity">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/logo"/>
     <EditText
         android:layout_width="match_parent"
+        android:textColor="#000"
+        android:layout_margin="10dp"
         android:layout_height="wrap_content"
         android:id="@+id/user_name"
         android:hint="UserName"/>
     <EditText
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#000"
         android:id="@+id/password"
         android:inputType="textPassword"
         android:hint="PassWord"/>
-    <com.dd.CircularProgressButton
 
+    <com.dd.CircularProgressButton
+        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login"
@@ -26,15 +39,22 @@
         android:id ="@+id/login_btn"
         android:textColor="#FFFFFF"
         app:cpb_textComplete="Complete"
+        android:layout_margin="10dp"
         app:cpb_textError="There was \nan Error"
         app:cpb_textIdle="LogIn"
         />
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:textSize="18sp"
+        android:textColor="#000"
+        android:text="New Member?Just Fill the form and click SignUp"
+        android:textStyle="italic"/>
+
         <com.dd.CircularProgressButton
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SignUp"
@@ -45,14 +65,7 @@
             app:cpb_textError="There was \nan error"
             app:cpb_textIdle="SignUp"
             />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="New Member?Just Fill the form and click SignUp"
-            android:textStyle="italic"/>
 
-    </LinearLayout>
 
 
 
