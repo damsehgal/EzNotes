@@ -34,11 +34,7 @@
             android:layout_height="match_parent"
             android:text="Download REPO"
             android:id="@+id/btn_download"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Commit Repo"
-            android:id="@+id/btn_commit"/>
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

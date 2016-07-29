@@ -2,4 +2,12 @@
     <string name="app_name">EzCloud</string>
     <string name="sender_repo_prompt">Sender Repo</string>
     <string name="receiver_repo_prompt">Receiver Repo</string>
+    <string name="drawer_open">ez</string>
+    <string name="drawer_close">ezCloud</string>
+    <string name="title_activity_home2">Home2</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>

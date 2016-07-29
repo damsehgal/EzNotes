@@ -2,14 +2,16 @@ package com.example.dam.ezcloud;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.dd.CircularProgressButton;
 
 import java.util.HashMap;
 
@@ -29,23 +31,36 @@ public class ChangePasswordFragment extends MyBasicFragment
 		final EditText currentPassword = (android.widget.EditText) (rootView).findViewById(R.id.curr_pass);
 		final EditText newPassword = (EditText) (rootView).findViewById(R.id.new_pass);
 		final EditText confirmPassword = (EditText) (rootView).findViewById(R.id.confirm_password);
-		Button btn1 = (Button) (rootView).findViewById(R.id.change_password);
+		final CircularProgressButton btn1 = (CircularProgressButton) (rootView).findViewById(R.id.change_password);
 		btn1.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View v)
 			{
+				btn1.setIndeterminateProgressMode(true);
+				btn1.setProgress(50);
 				Log.e("called", "onClick: ");
 				if (currentPassword.getText().toString().equals(Home.passWord) && newPassword.getText().toString().equals(confirmPassword.getText().toString()))
 				{
 					Home.passWord = changePassword(Home.userName, newPassword.getText().toString());
 					Toast.makeText(context, "Password changed successfully", Toast.LENGTH_SHORT).show();
+					btn1.setProgress(100);
 					Log.e("changed", "onClick: ");
 				}
 				else
 				{
 					Log.e("unchanged", "onClick: ");
 					Toast.makeText(context, "Please Refill the form", Toast.LENGTH_SHORT).show();
+					btn1.setProgress(-1);
+					Handler handler = new Handler();
+					handler.postDelayed(new Runnable()
+					{
+						@Override
+						public void run()
+						{
+							btn1.setProgress(0);
+						}
+					}, 2000);
 				}
 			}
 		});

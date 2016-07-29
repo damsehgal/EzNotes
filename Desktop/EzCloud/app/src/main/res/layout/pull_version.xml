@@ -4,17 +4,21 @@
               android:layout_height="match_parent"
               android:orientation="vertical"
               android:gravity="center">
-    <EditText
-        android:layout_width="match_parent"
+    <Spinner
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Select Repository"
-
+        android:spinnerMode="dialog"
+        android:prompt="@string/receiver_repo_prompt"
+        android:focusable="true"
         android:id="@+id/select_repository"/>
-    <EditText
-        android:layout_width="match_parent"
+    <Spinner
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:spinnerMode="dialog"
+        android:prompt="@string/receiver_repo_prompt"
+        android:focusable="true"
         android:id="@+id/select_version"
-        android:hint="Select Version"/>
+        />
     <Button
         android:layout_width="wrap_content"
         android:id="@+id/btn_pull_version"

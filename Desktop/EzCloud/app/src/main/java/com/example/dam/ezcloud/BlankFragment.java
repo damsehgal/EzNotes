@@ -128,22 +128,17 @@ public class BlankFragment extends Fragment
 		{
 			return new PushRequestFragment(inflater, container, savedInstanceState, getContext()).onCreate();
 		}
+
 		else if (position == 3)
-		{
-			//TODO CLONE
-			// i.e clone a repository || take a repository and place it in my database
-			return new CloneFragment(inflater, container, savedInstanceState, getContext()).onCreate();
-		}
-		else if (position == 4)
 		{
 			//Todo Pull Version
 			return new PullOwnVersionFragment(inflater, container, savedInstanceState, getContext()).onCreate();
 		}
-		else if (position == 5)
+		else if (position == 4)
 		{
 			return new SendMergeRequestFragment(inflater, container, savedInstanceState, getContext()).onCreate();
 		}
-		else if (position == 6)
+		else if (position == 5)
 		{
 			View rootView = inflater.inflate(R.layout.create_new, container, false);
 			Log.e("Called", "onCreateView: ");

@@ -1,14 +1,15 @@
 package com.example.dam.ezcloud;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -17,15 +18,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
-
-import net.rdrei.android.dirchooser.DirectoryChooserActivity;
-
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import android.widget.TextView;
 
 public class Home extends AppCompatActivity
 {
@@ -33,23 +28,29 @@ public class Home extends AppCompatActivity
 	FragmentManager fragmentManager;
 	FragmentTransaction fragmentTransaction;
 	Uri uri;
+
 	ListView mDrawerList;
+
+	DrawerLayout mDrawerLayout;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
 		ArrayAdapter<String> mAdapter;
 		mDrawerList = (ListView) findViewById(R.id.navList);
-		String[] osArray = {"CHANGE PASSWORD", "OPEN FILE", "PUSH REQUEST", "CLONE", "PULL VERSION", "MERGE REQUEST", "Create New", "LOGOUT"};
+		String[] osArray = {"CHANGE PASSWORD", "OPEN FILE", "PUSH REQUEST", "PULL VERSION", "MERGE REQUEST", "Create New", "LOGOUT"};
 		mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
 		mDrawerList.setAdapter(mAdapter);
 		mDrawerList.setOnItemClickListener(new MyOnItemClickListener());
 		Intent intent = getIntent();
+
+
 		userName = intent.getStringExtra(MainActivity.USERNAME_KEY);
 		passWord = intent.getStringExtra(MainActivity.PASSWORD_KEY);
 	}
-
 	public boolean dispatchTouchEvent(MotionEvent event)
 	{
 		if (event.getAction() == MotionEvent.ACTION_DOWN)
@@ -97,5 +98,4 @@ public class Home extends AppCompatActivity
 			((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawer(mDrawerList);
 		}
 	}
-
 }

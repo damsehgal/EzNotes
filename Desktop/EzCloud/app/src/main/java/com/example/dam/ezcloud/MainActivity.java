@@ -7,14 +7,16 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.dd.CircularProgressButton;
 
 import java.util.HashMap;
 
@@ -22,7 +24,7 @@ public class MainActivity extends AppCompatActivity
 {
 	public static final String USERNAME_KEY = "dsaklksdzbcsdzxbcsmz";
 	public static final String PASSWORD_KEY = "zdksanO;aslkaaddav";
-	Button login, signUp;
+	CircularProgressButton login, signUp;
 	EditText userId, passWord;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -31,8 +33,10 @@ public class MainActivity extends AppCompatActivity
 		setContentView(R.layout.activity_main);
 		Log.e("MainActivity", "onCreate: " + "called");
 		final boolean isLoggedIn = checkSessionIDInSharedPrefs();
-		login = (Button) (findViewById(R.id.login_btn));
-		signUp = (Button) (findViewById(R.id.sign_up_btn));
+		login = (CircularProgressButton) findViewById(R.id.login_btn);
+		login.setIndeterminateProgressMode(true);
+		signUp = (CircularProgressButton) findViewById(R.id.sign_up_btn);
+		signUp.setIndeterminateProgressMode(true);
 		userId = (EditText) (findViewById(R.id.user_name));
 		passWord = (EditText) (findViewById(R.id.password));
 		ConnectivityManager cMgr = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
@@ -102,8 +106,21 @@ public class MainActivity extends AppCompatActivity
 		@Override
 		public void onClick(View v)
 		{
+			login.setProgress(50);
 			if (userId.getText().toString().isEmpty() || passWord.getText().toString().isEmpty())
+			{
 				Toast.makeText(MainActivity.this, "Plz fill all the fields", Toast.LENGTH_SHORT).show();
+				login.setProgress(-1);
+				Handler handler = new Handler();
+				handler.postDelayed(new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						login.setProgress(0);
+					}
+				}, 2000);
+			}
 			else
 			{
 				HashMap<String, String> hashMap = new HashMap<>();
@@ -125,6 +142,7 @@ public class MainActivity extends AppCompatActivity
 							ed.putString("sess_ID", str.substring(8));
 							ed.commit();
 							Intent intent = new Intent(MainActivity.this, Home.class);
+							login.setProgress(100);
 							intent.putExtra(USERNAME_KEY, userId.getText().toString());
 							intent.putExtra(PASSWORD_KEY, passWord.getText().toString());
 							startActivity(intent);
@@ -132,10 +150,30 @@ public class MainActivity extends AppCompatActivity
 						else if (str.charAt(0) == 'N')
 						{
 							Toast.makeText(MainActivity.this, "Username does not exist", Toast.LENGTH_SHORT).show();
+							login.setProgress(-1);
+							Handler handler = new Handler();
+							handler.postDelayed(new Runnable()
+							{
+								@Override
+								public void run()
+								{
+									login.setProgress(0);
+								}
+							}, 2000);
 						}
 						else
 						{
 							Toast.makeText(MainActivity.this, "Password is Incorrect", Toast.LENGTH_SHORT).show();
+							login.setProgress(-1);
+							Handler handler = new Handler();
+							handler.postDelayed(new Runnable()
+							{
+								@Override
+								public void run()
+								{
+									login.setProgress(0);
+								}
+							}, 2000);
 						}
 						return str;
 					}
@@ -155,8 +193,21 @@ public class MainActivity extends AppCompatActivity
 		@Override
 		public void onClick(View v)
 		{
+			signUp.setProgress(50);
 			if (userId.getText().toString().isEmpty() || passWord.getText().toString().isEmpty())
+			{
 				Toast.makeText(MainActivity.this, "Plz fill all the fields", Toast.LENGTH_SHORT).show();
+				signUp.setProgress(-1);
+				Handler handler = new Handler();
+				handler.postDelayed(new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						signUp.setProgress(0);
+					}
+				}, 2000);
+			}
 			else
 			{
 				HashMap<String, String> hashMap = new HashMap<>();
@@ -174,10 +225,22 @@ public class MainActivity extends AppCompatActivity
 						if (str.charAt(0) == 'U')
 						{
 							Toast.makeText(MainActivity.this, "Username Already exist", Toast.LENGTH_SHORT).show();
+							signUp.setProgress(-1);
+							Handler handler = new Handler();
+							handler.postDelayed(new Runnable()
+							{
+								@Override
+								public void run()
+								{
+									signUp.setProgress(0);
+								}
+							}, 2000);
 						}
 						else if (str.charAt(0) == 'I')
 						{
 							Toast.makeText(MainActivity.this, "ID created plz Login", Toast.LENGTH_SHORT).show();
+							signUp.setProgress(100);
+							login.performClick();
 						}
 						return str;
 					}
