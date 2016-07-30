@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical">
     <EditText
         android:layout_width="match_parent"
@@ -16,27 +17,45 @@
         android:gravity="center"
         android:padding="20dp"
         >
-        <Button
+        <com.dd.CircularProgressButton
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="Chose\nFile"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
             android:textAllCaps="false"
-            android:id="@+id/btn_chose_file"/>
+            app:cpb_textComplete="File chosen"
+            app:cpb_textError="Error"
+            app:cpb_textIdle="Choose File"
+            android:id="@+id/btn_chose_file"
+            android:layout_margin = "2dp"/>
 
-        <Button
+        <com.dd.CircularProgressButton
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:id="@+id/save_file"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
             android:textAllCaps="false"
+            app:cpb_textComplete="File Saved"
+            app:cpb_textError="Error"
+            android:layout_margin = "2dp"
+            app:cpb_textIdle="Save File"
             android:text="Save\nFile"/>
-        <Button
+        <com.dd.CircularProgressButton
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:id="@+id/upload_file"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
             android:textAllCaps="false"
+            app:cpb_textComplete="File Uploaded"
+            app:cpb_textError="Error"
+            android:layout_margin = "2dp"
+            app:cpb_textIdle="Upload File"
             android:text="Upload\nFile"/>
 
     </LinearLayout>

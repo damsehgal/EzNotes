@@ -18,7 +18,11 @@ class UploadFile extends AsyncTask<String, Integer, String>
 {
 	String path;
 	Context context;
-
+	OnTaskDoneListener onTaskDoneListener;
+	public void setOnTaskDoneListener(OnTaskDoneListener onTaskDoneListener)
+	{
+		this.onTaskDoneListener = onTaskDoneListener;
+	}
 	public UploadFile(String path, Context context)
 	{
 		this.path = path;
@@ -113,14 +117,14 @@ class UploadFile extends AsyncTask<String, Integer, String>
 		}
 		return "Executed";
 	}
-
+	public interface OnTaskDoneListener
+	{
+		void onTaskComplete(boolean isSuccessful);
+	}
 	@Override
 	protected void onPostExecute(String result)
 	{
-		if (result.equals("Executed"))
-		{
-			Toast.makeText(context, "File Uploaded", Toast.LENGTH_SHORT).show();
-		}
+		onTaskDoneListener.onTaskComplete(result.equals("Executed"));
 	}
 
 	@Override

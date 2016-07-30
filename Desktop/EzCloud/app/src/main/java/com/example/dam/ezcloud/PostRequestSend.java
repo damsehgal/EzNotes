@@ -1,6 +1,5 @@
 package com.example.dam.ezcloud;
-//TODO MODIFY THIS CLASS FOR GOOD CODE QUALITY
-//to be done later..
+
 import android.os.AsyncTask;
 import android.util.Log;
 

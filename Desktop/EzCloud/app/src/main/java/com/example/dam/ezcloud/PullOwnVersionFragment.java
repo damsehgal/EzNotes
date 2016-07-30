@@ -12,11 +12,15 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.dd.CircularProgressButton;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 /**
  * Created by dam on 25/7/16.
@@ -26,6 +30,7 @@ public class PullOwnVersionFragment extends MyBasicFragment
 	private static final String TAG = PullOwnVersionFragment.class.getSimpleName();
 	String editText1, editText2;
 	Spinner s1, s2;
+	CircularProgressButton btn1;
 	boolean flag = false;
 	public PullOwnVersionFragment(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, Context context)
 	{
@@ -75,8 +80,10 @@ public class PullOwnVersionFragment extends MyBasicFragment
 				Toast.makeText(context, "Nothing Selected", Toast.LENGTH_SHORT).show();
 			}
 		});
-		Button btn1 = (Button) rootView.findViewById(R.id.btn_pull_version);
+		btn1 = (CircularProgressButton) rootView.findViewById(R.id.btn_pull_version);
 		btn1.setOnClickListener(new Btn1OnClickListener());
+		btn1.setIndeterminateProgressMode(true);
+		btn1.setProgress(0);
 		return rootView;
 	}
 	public void setSpinnerAdapter(String username, final Spinner spinner)
@@ -136,9 +143,11 @@ public class PullOwnVersionFragment extends MyBasicFragment
 	}
 	public class Btn1OnClickListener implements View.OnClickListener
 	{
+
 		@Override
 		public void onClick(View v)
 		{
+			btn1.setProgress(50);
 			String path = editText1 + "/" + editText2 + "/" + editText1;
 			DownloadFileFTP downloadFileFTP = new DownloadFileFTP(context, path, new DownloadFileFTP.OnFileDownloadListener()
 			{
@@ -146,6 +155,17 @@ public class PullOwnVersionFragment extends MyBasicFragment
 				public void onFileDownload(String path)
 				{
 					Toast.makeText(context, "Folder successfully saved with path= " + path, Toast.LENGTH_SHORT).show();
+					btn1.setProgress(100);
+					android.os.Handler handler = new android.os.Handler();
+					handler.postDelayed(new Runnable()
+					{
+						@Override
+						public void run()
+						{
+							btn1.setProgress(0);
+						}
+					}, 2000);
+
 				}
 			});
 			downloadFileFTP.execute();

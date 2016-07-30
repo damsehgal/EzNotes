@@ -1,5 +1,7 @@
 package com.example.dam.ezcloud;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -20,6 +22,20 @@ public class DirectoryToZip extends AsyncTask<String, Void, String>
 {
 	Boolean isSuccessfulyZipped;
 	String temp;
+	ProgressDialog progressDialog ;
+	Context context;
+	public void setContext(Context context)
+	{
+		this.context = context;
+	}
+	@Override
+	protected void onPreExecute()
+	{
+		super.onPreExecute();
+		progressDialog = new ProgressDialog(context);
+		progressDialog.setMessage("Loading...");
+		progressDialog.show();
+	}
 	@Override
 	protected String doInBackground(String... params)
 	{
@@ -114,7 +130,8 @@ public class DirectoryToZip extends AsyncTask<String, Void, String>
 	@Override
 	protected void onPostExecute(String s)
 	{
-		onTaskDoneListener.onTaskDone(isSuccessfulyZipped, temp);
 		super.onPostExecute(s);
+		onTaskDoneListener.onTaskDone(isSuccessfulyZipped, temp);
+		progressDialog.dismiss();
 	}
 }

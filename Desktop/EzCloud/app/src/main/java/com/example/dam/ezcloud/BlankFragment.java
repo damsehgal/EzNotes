@@ -54,7 +54,7 @@ public class BlankFragment extends Fragment
 		super.onCreate(savedInstanceState);
 	}
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState)
 	{
 		ocvcl.onCreateViewCalled(position);
 		Log.e("Fragment", "onCreateView: Called");
@@ -68,19 +68,60 @@ public class BlankFragment extends Fragment
 			Log.e("pos1", "onCreateView: ");
 			// Need to implement it here only :-<
 			final View rootView = inflater.inflate(R.layout.openfile, container, false);
-			Button choseFile = (Button) rootView.findViewById(R.id.btn_chose_file);
-			Button saveFile = (Button) rootView.findViewById(R.id.save_file);
-			Button upLoadFile = (Button) rootView.findViewById(R.id.upload_file);
+			CircularProgressButton choseFile = (CircularProgressButton) rootView.findViewById(R.id.btn_chose_file);
+			final CircularProgressButton saveFile = (CircularProgressButton) rootView.findViewById(R.id.save_file);
+			final CircularProgressButton upLoadFile = (CircularProgressButton) rootView.findViewById(R.id.upload_file);
 			et1= (EditText) rootView.findViewById(R.id.opened_file);
+			choseFile.setIndeterminateProgressMode(true);
+			saveFile.setIndeterminateProgressMode(true);
+			upLoadFile.setIndeterminateProgressMode(true);
+			choseFile.setProgress(0);
+			saveFile.setProgress(0);
+			upLoadFile.setProgress(0);
 			upLoadFile.setOnClickListener(new View.OnClickListener()
 			{
 				@Override
 				public void onClick(View v)
 				{
+					upLoadFile.setProgress(50);
 					String str = Environment.getExternalStorageDirectory() + "/" + (new File(uri.getPath())).getAbsolutePath().split(":")[1];
 					Log.e("Upload", "onClick: " + str);
 					UploadFile uploadFile = new UploadFile(str, getContext());
+					uploadFile.setOnTaskDoneListener(new UploadFile.OnTaskDoneListener()
+					{
+						@Override
+						public void onTaskComplete(boolean isSuccessful)
+						{
+							if(isSuccessful)
+							{
+								upLoadFile.setProgress(100);
+								Handler handler = new Handler();
+								handler.postDelayed(new Runnable()
+								{
+									@Override
+									public void run()
+									{
+										upLoadFile.setProgress(0);
+									}
+								}, 2000);
+							}
+							else
+							{
+								upLoadFile.setProgress(-1);
+								Handler handler = new Handler();
+								handler.postDelayed(new Runnable()
+								{
+									@Override
+									public void run()
+									{
+										upLoadFile.setProgress(0);
+									}
+								}, 2000);
+							}
+						}
+					});
 					uploadFile.execute();
+
 				}
 			});
 			saveFile.setOnClickListener(new View.OnClickListener()
@@ -91,21 +132,64 @@ public class BlankFragment extends Fragment
 					//TODO Toast.makeText(getContext()(), "Not Supported as of now", Toast.LENGTH_SHORT).show();
 					try
 					{
+						saveFile.setProgress(50);
 						getContext().getContentResolver().openOutputStream(uri).write(et1.getText().toString().getBytes());
+						saveFile.setProgress(100);
+						Handler handler = new Handler();
+						handler.postDelayed(new Runnable()
+						{
+							@Override
+							public void run()
+							{
+								saveFile.setProgress(0);
+							}
+						}, 2000);
 						Toast.makeText(getContext(), "File Saved Successfully", Toast.LENGTH_SHORT).show();
 					}
 					catch (SecurityException e)
 					{
 						Log.d("Permission Not Granted", "onClick: " + e);
+						saveFile.setProgress(-1);
+						Handler handler = new Handler();
+						handler.postDelayed(new Runnable()
+						{
+							@Override
+							public void run()
+							{
+								saveFile.setProgress(0);
+							}
+						}, 2000);
+
 						Toast.makeText(getContext(), "Permission Not Granted", Toast.LENGTH_SHORT).show();
 					}
 					catch (IOException e)
 					{
 						Toast.makeText(getContext(), "IO Exception", Toast.LENGTH_SHORT).show();
+						saveFile.setProgress(-1);
+						Handler handler = new Handler();
+						handler.postDelayed(new Runnable()
+						{
+							@Override
+							public void run()
+							{
+								saveFile.setProgress(0);
+							}
+						}, 2000);
 					}
 					catch (Exception e)
 					{
 						Toast.makeText(getContext(), "Please chose a file first and don't keep it empty", Toast.LENGTH_SHORT).show();
+						saveFile.setProgress(-1);
+						Handler handler = new Handler();
+						handler.postDelayed(new Runnable()
+						{
+							@Override
+							public void run()
+							{
+								saveFile.setProgress(0);
+							}
+						}, 2000);
+
 					}
 				}
 
@@ -222,6 +306,7 @@ public class BlankFragment extends Fragment
 							}
 						}
 					});
+					d2z.setContext(getContext());
 					d2z.execute( path.getText().toString(),path.getText().toString()+"/"+ repoName.getText().toString());
 				}
 			});

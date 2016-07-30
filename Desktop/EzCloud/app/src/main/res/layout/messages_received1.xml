@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -32,10 +33,14 @@
             android:layout_weight="2"
             android:id="@+id/temp_edit_text_details"/>
     </LinearLayout>
-    <Button
+    <com.dd.CircularProgressButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="download"
+        android:textColor="#FFFFFF"
+        android:textAllCaps="false"
+        app:cpb_textComplete="Downloaded"
+        app:cpb_textError="There was an error"
+        app:cpb_textIdle="Download"
         android:id="@+id/temp_btn_download"/>
 
 </LinearLayout>

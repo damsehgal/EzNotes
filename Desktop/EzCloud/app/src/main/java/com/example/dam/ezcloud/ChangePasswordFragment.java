@@ -45,6 +45,15 @@ public class ChangePasswordFragment extends MyBasicFragment
 					Home.passWord = changePassword(Home.userName, newPassword.getText().toString());
 					Toast.makeText(context, "Password changed successfully", Toast.LENGTH_SHORT).show();
 					btn1.setProgress(100);
+					Handler handler = new Handler();
+					handler.postDelayed(new Runnable()
+					{
+						@Override
+						public void run()
+						{
+							btn1.setProgress(0);
+						}
+					}, 2000);
 					Log.e("changed", "onClick: ");
 				}
 				else

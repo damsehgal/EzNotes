@@ -1,6 +1,7 @@
 package com.example.dam.ezcloud;
 
 import android.app.DownloadManager;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +28,7 @@ public class DownloadFileFTP extends AsyncTask<Void, Void, String>
 	String fileName;
 	String username;
 	String path;
+	ProgressDialog progressDialog;
 	OnFileDownloadListener onFileDownloadListener;
 	public DownloadFileFTP(Context context, String fileName,OnFileDownloadListener onFileDownloadListener)
 	{
@@ -42,8 +44,14 @@ public class DownloadFileFTP extends AsyncTask<Void, Void, String>
 		this.username = username;
 		this.onFileDownloadListener = onFileDownloadListener;
 	}
-
-
+	@Override
+	protected void onPreExecute()
+	{
+		super.onPreExecute();
+		progressDialog = new ProgressDialog(context);
+		progressDialog.setMessage("Loading...");
+		progressDialog.show();
+	}
 	@Override
 	protected String doInBackground(Void... params)
 	{
@@ -91,6 +99,7 @@ public class DownloadFileFTP extends AsyncTask<Void, Void, String>
 		Log.e("TAG", "onPostExecute: Am i here" );
 
 		onFileDownloadListener.onFileDownload(s);
+		progressDialog.dismiss();
 		super.onPostExecute(s);
 	}
 	public interface OnFileDownloadListener
