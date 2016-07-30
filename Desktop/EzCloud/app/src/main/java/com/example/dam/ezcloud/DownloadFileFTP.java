@@ -56,9 +56,10 @@ public class DownloadFileFTP extends AsyncTask<Void, Void, String>
 	protected String doInBackground(Void... params)
 	{
 		Log.e("TAG", "getData: " + fileName);
+		String repoN = new File(fileName).getName();
 		String url = "http://ezcloud.esy.es/ezCloudWebsite/" + username + "/" + fileName + ".zip";
 		Log.e("TAG", "getData: " + url);
-		path = Environment.getExternalStorageDirectory() + "/" + fileName + ".zip";
+		path = Environment.getExternalStorageDirectory() + "/" + repoN + ".zip";
 		Log.e("TAG", "doInBackground: " + path );
 		try
 		{
@@ -68,7 +69,10 @@ public class DownloadFileFTP extends AsyncTask<Void, Void, String>
 			httpURLConnection.setDoOutput(true);
 			File file = new File(path);
 			if (!file.exists())
-				file.mkdirs();
+			{
+				file.createNewFile();
+				Log.e("TAG", "doInBackground: R2D2" );
+			}
 			Log.e("TAG", "doInBackground: reached Here" );
 			FileOutputStream fileOutputStream = new FileOutputStream(file);
 			InputStream inputStream = httpURLConnection.getInputStream();
@@ -91,7 +95,7 @@ public class DownloadFileFTP extends AsyncTask<Void, Void, String>
 		{
 			e.printStackTrace();
 		}
-		return Environment.getExternalStorageDirectory() + "/" + fileName + ".zip";
+		return Environment.getExternalStorageDirectory() + "/" + repoN+ ".zip";
 	}
 	@Override
 	protected void onPostExecute(String s)

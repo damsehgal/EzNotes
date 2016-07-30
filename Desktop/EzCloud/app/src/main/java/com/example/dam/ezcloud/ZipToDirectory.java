@@ -112,7 +112,8 @@ public class ZipToDirectory extends AsyncTask<String, Void, Void>
 	@Override
 	protected void onPostExecute(Void aVoid)
 	{
-		onTaskDoneListener.onTaskDone(flag);
+		if (onTaskDoneListener!=null)
+			onTaskDoneListener.onTaskDone(flag);
 		super.onPostExecute(aVoid);
 		Log.e(TAG, "onPostExecute: " + "task completed");
 	}

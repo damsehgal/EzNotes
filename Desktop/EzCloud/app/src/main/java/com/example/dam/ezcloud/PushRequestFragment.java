@@ -68,6 +68,7 @@ public class PushRequestFragment extends MyBasicFragment
 		hashMap.put("receiver", Home.userName);
 		arrayList = new ArrayList<>();
 		PostRequestSend postRequestSend = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/receiveMessages.php?", hashMap);
+		postRequestSend.setContext(context);
 		postRequestSend.setTaskDoneListener(new PostRequestSend.TaskDoneListener()
 		{
 			@Override
@@ -120,7 +121,7 @@ public class PushRequestFragment extends MyBasicFragment
 			myView = new MyView();
 			myView.imageView = (ImageView) convertView.findViewById(R.id.temp_image_view);
 			Random rnd = new Random();
-			int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+			final int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
 			TextDrawable drawable = TextDrawable.builder().beginConfig().toUpperCase().endConfig().buildRect("" + getItem(position).sender.charAt(0), color);
 			myView.imageView.setImageDrawable(drawable);
 			myView.sender = (TextView) convertView.findViewById(R.id.temp_edit_text_from);
@@ -152,6 +153,7 @@ public class PushRequestFragment extends MyBasicFragment
 					hashMap.put("username", myView.sender.getText().toString());
 					hashMap.put("reponame", getItem(position).repo_receiver);
 					PostRequestSend postRequestSend = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/get_repo_version.php?", hashMap);
+					postRequestSend.setContext(context);
 					postRequestSend.setTaskDoneListener(new PostRequestSend.TaskDoneListener()
 					{
 						@Override

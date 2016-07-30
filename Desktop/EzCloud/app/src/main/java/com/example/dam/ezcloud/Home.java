@@ -55,25 +55,7 @@ public class Home extends AppCompatActivity
 		userName = intent.getStringExtra(MainActivity.USERNAME_KEY);
 		passWord = intent.getStringExtra(MainActivity.PASSWORD_KEY);
 	}
-	public boolean dispatchTouchEvent(MotionEvent event)
-	{
-		if (event.getAction() == MotionEvent.ACTION_DOWN)
-		{
-			View v = getCurrentFocus();
-			if (v instanceof EditText)
-			{
-				Rect outRect = new Rect();
-				v.getGlobalVisibleRect(outRect);
-				if (!outRect.contains((int) event.getRawX(), (int) event.getRawY()))
-				{
-					v.clearFocus();
-					InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-					imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-				}
-			}
-		}
-		return super.dispatchTouchEvent(event);
-	}
+
 	public class MyOnItemClickListener implements AdapterView.OnItemClickListener
 	{
 		@Override

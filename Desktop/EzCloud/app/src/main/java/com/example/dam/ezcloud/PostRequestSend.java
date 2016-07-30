@@ -1,5 +1,7 @@
 package com.example.dam.ezcloud;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -27,6 +29,24 @@ public class PostRequestSend extends AsyncTask<String, Void, String>
 	TaskDoneListener taskDoneListener;
 	String url;
 	HashMap<String, String> hashFromOther;
+	Context context;
+	ProgressDialog progressDialog;
+	public void setContext(Context context)
+	{
+		this.context = context;
+	}
+	@Override
+
+	protected void onPreExecute()
+	{
+		super.onPreExecute();
+		if (context != null)
+		{
+			progressDialog = new ProgressDialog(context);
+			progressDialog.setMessage("Loading...");
+			progressDialog.show();
+		}
+	}
 	public void setTaskDoneListener(TaskDoneListener taskDoneListener)
 	{
 		this.taskDoneListener = taskDoneListener;
@@ -102,6 +122,8 @@ public class PostRequestSend extends AsyncTask<String, Void, String>
 	protected void onPostExecute(String s)
 	{
 		super.onPostExecute(s);
+		if(progressDialog != null)
+			progressDialog.dismiss();
 		try
 		{
 			taskDoneListener.onTaskDone(s);

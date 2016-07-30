@@ -267,6 +267,7 @@ public class BlankFragment extends Fragment
 								hash.put("username", Home.userName);
 								hash.put("repoName", repoName.getText().toString());
 								PostRequestSend prs = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/commit.php?", hash);
+								prs.setContext(getContext());
 								prs.setTaskDoneListener(new PostRequestSend.TaskDoneListener()
 								{
 									@Override

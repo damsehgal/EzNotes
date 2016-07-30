@@ -83,6 +83,7 @@ public class ChangePasswordFragment extends MyBasicFragment
 		hash.put("username", userName);
 		hash.put("password", password);
 		PostRequestSend changePass = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/change_pass_app.php?", hash);
+		changePass.setContext(context);
 		changePass.setTaskDoneListener(new PostRequestSend.TaskDoneListener()
 		{
 			@Override

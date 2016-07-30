@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,14 +54,17 @@ public class SendMergeRequestFragment extends MyBasicFragment
 		receiverName = (EditText) rootView.findViewById(R.id.edit_text_to);
 		details = (EditText) rootView.findViewById(R.id.edit_text_details);
 		sendMessage = (CircularProgressButton) rootView.findViewById(R.id.btn_send_message);
-		receiverName.setOnFocusChangeListener(new View.OnFocusChangeListener()
+
+		receiverName.setOnKeyListener(new View.OnKeyListener()
 		{
-			@Override
-			public void onFocusChange(View v, boolean hasFocus)
+			public boolean onKey(View v, int keyCode, KeyEvent event)
 			{
-				Log.e(TAG, "onFocusChange: I am Here");
-				setSpinnerAdapter(receiverName.getText().toString(), spinnerToRepo);
-				Log.e(TAG, "onFocusChange: but am I here");
+				if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER))
+				{
+					setSpinnerAdapter(receiverName.getText().toString(), spinnerToRepo);
+					return true;
+				}
+				return false;
 			}
 		});
 		setSpinnerAdapter(Home.userName, spinnerUserRepo);
@@ -101,6 +105,7 @@ public class SendMergeRequestFragment extends MyBasicFragment
 		hashMap.put("username", username);
 		final ArrayList<String> arr = new ArrayList<>();
 		PostRequestSend postRequestSend = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/get_users_repo.php?", hashMap);
+		postRequestSend.setContext(context);
 		postRequestSend.setTaskDoneListener(new PostRequestSend.TaskDoneListener()
 		{
 			@Override

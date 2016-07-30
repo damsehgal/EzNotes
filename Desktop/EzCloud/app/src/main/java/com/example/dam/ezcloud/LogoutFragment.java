@@ -30,6 +30,7 @@ public class LogoutFragment extends MyBasicFragment
 		HashMap<String, String> hashMap = new HashMap<>();
 		hashMap.put("sess_ID", PreferenceManager.getDefaultSharedPreferences(context).getString("sess_ID", ""));
 		PostRequestSend prs = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/logout_app.php?", hashMap);
+		prs.setContext(context);
 		prs.setTaskDoneListener(new PostRequestSend.TaskDoneListener()
 		{
 			@Override

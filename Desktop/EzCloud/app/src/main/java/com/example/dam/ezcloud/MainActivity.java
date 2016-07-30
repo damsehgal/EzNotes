@@ -146,6 +146,7 @@ public class MainActivity extends AppCompatActivity
 							intent.putExtra(USERNAME_KEY, userId.getText().toString());
 							intent.putExtra(PASSWORD_KEY, passWord.getText().toString());
 							startActivity(intent);
+							finish();
 						}
 						else if (str.charAt(0) == 'N')
 						{

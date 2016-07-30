@@ -2,6 +2,7 @@ package com.example.dam.ezcloud;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,6 +93,7 @@ public class PullOwnVersionFragment extends MyBasicFragment
 		hashMap.put("username", username);
 		final ArrayList<String> arr = new ArrayList<>();
 		PostRequestSend postRequestSend = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/get_users_repo.php?", hashMap);
+		postRequestSend.setContext(context);
 		postRequestSend.setTaskDoneListener(new PostRequestSend.TaskDoneListener()
 		{
 			@Override
@@ -154,6 +156,9 @@ public class PullOwnVersionFragment extends MyBasicFragment
 				@Override
 				public void onFileDownload(String path)
 				{
+					String destinationDir = Environment.getExternalStorageDirectory()+"/"+editText1;
+					ZipToDirectory zipToDirectory = new ZipToDirectory();
+					zipToDirectory.execute(path,destinationDir);
 					Toast.makeText(context, "Folder successfully saved with path= " + path, Toast.LENGTH_SHORT).show();
 					btn1.setProgress(100);
 					android.os.Handler handler = new android.os.Handler();
