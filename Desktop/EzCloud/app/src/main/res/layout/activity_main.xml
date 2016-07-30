@@ -14,23 +14,32 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:src="@drawable/logo"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:textColor="#000"
-        android:layout_margin="10dp"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:id="@+id/user_name"
-        android:hint="UserName"/>
-    <EditText
-        android:layout_margin="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#000"
-        android:id="@+id/password"
-        android:inputType="textPassword"
-        android:hint="PassWord"/>
 
+    <com.wrapp.floatlabelededittext.FloatLabeledEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <EditText
+            android:layout_width="match_parent"
+            android:textColor="#000"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:id="@+id/user_name"
+            android:hint="UserName"/>
+    </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+    <com.wrapp.floatlabelededittext.FloatLabeledEditText
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <EditText
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:id="@+id/password"
+            android:inputType="textPassword"
+            android:hint="PassWord"/>
+    </com.wrapp.floatlabelededittext.FloatLabeledEditText>
     <com.dd.CircularProgressButton
         android:layout_gravity="center"
         android:layout_width="200dp"
