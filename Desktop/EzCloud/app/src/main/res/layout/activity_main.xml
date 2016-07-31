@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:textColor="#000"
-        android:text="New Member?Just Fill the form and click SignUp"
+        android:text="New Member?Just SignUp"
         android:textStyle="italic"/>
 
         <com.dd.CircularProgressButton

@@ -39,7 +39,7 @@ public class PostRequestSend extends AsyncTask<String, Void, String>
 
 	protected void onPreExecute()
 	{
-		super.onPreExecute();
+
 		if (context != null)
 		{
 			progressDialog = new ProgressDialog(context);
@@ -122,6 +122,7 @@ public class PostRequestSend extends AsyncTask<String, Void, String>
 	protected void onPostExecute(String s)
 	{
 		super.onPostExecute(s);
+
 		if(progressDialog != null)
 			progressDialog.dismiss();
 		try

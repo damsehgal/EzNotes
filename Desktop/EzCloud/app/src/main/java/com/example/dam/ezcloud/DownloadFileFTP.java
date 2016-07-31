@@ -32,7 +32,7 @@ public class DownloadFileFTP extends AsyncTask<Void, Void, String>
 	OnFileDownloadListener onFileDownloadListener;
 	public DownloadFileFTP(Context context, String fileName,OnFileDownloadListener onFileDownloadListener)
 	{
-		this.username = Home.userName;
+		this.username = Home2.userName;
 		this.context = context;
 		this.fileName = fileName;
 		this.onFileDownloadListener = onFileDownloadListener;

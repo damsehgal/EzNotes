@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.HashMap;
 
@@ -36,18 +37,32 @@ public class LogoutFragment extends MyBasicFragment
 			@Override
 			public String onTaskDone(String str)
 			{
-				SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-				SharedPreferences.Editor ed = preferences.edit();
-				ed.putString("sess_ID", "");
-				ed.commit();
-				Log.e("PostResponse", "onTaskDone: " + str);
-				Log.e("LOGOUT", "onCreateView: " + preferences.getString("sess_ID", ""));
-				Intent intent = new Intent(context, MainActivity.class);
-				activity.startActivity(intent);
+				if (str.equals(""))
+				{
+					Toast.makeText(context, "Check your Connection", Toast.LENGTH_SHORT).show();
+				}
+				else
+				{
+					SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+					SharedPreferences.Editor ed = preferences.edit();
+					ed.putString("sess_ID", "");
+					ed.commit();
+					Log.e("PostResponse", "onTaskDone: " + str);
+					Log.e("LOGOUT", "onCreateView: " + preferences.getString("sess_ID", ""));
+					Intent intent = new Intent(context, MainActivity.class);
+					activity.startActivity(intent);
+				}
 				return null;
 			}
 		});
-		prs.execute();
-		return getRootView(R.layout.openfile);
+		try
+		{
+			prs.execute();
+		}
+		catch (Exception e)
+		{
+			Toast.makeText(context, "Check your Connection", Toast.LENGTH_SHORT).show();
+		}
+		return getRootView(R.layout.logout);
 	}
 }

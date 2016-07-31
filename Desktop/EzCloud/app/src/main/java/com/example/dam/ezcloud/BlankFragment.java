@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -30,10 +29,18 @@ import java.util.HashMap;
 
 public class BlankFragment extends Fragment
 {
+	public static BlankFragment newInstance (int value)
+	{
+		BlankFragment blankFragment = new BlankFragment();
+		Bundle b = new Bundle();
+		b.putInt("key",value);
+		blankFragment.setArguments(b);
+		return blankFragment;
+	}
 	private static final String TAG = "BlankFragment";
 	public static final int REQUEST_DIRECTORY_PUSH = 4530;
 	EditText et1 , path;
-	int position;
+	int position ;
 	static Uri uri;
 	OnCreateViewCalledListener ocvcl;
 	public void setOnCreateViewCalledListener(OnCreateViewCalledListener ocvcListener)
@@ -53,10 +60,24 @@ public class BlankFragment extends Fragment
 	{
 		super.onCreate(savedInstanceState);
 	}
+
+
+
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState)
 	{
-		ocvcl.onCreateViewCalled(position);
+		Bundle bundle = this.getArguments();
+		if (bundle == null)
+		{
+			Log.e(TAG, "onCreateView: fass gya" );
+			position = 0;
+		}
+		else
+		{
+			position = bundle.getInt("key");
+		}
+		Home2.pd.hide();
 		Log.e("Fragment", "onCreateView: Called");
 		if (position == 0)
 		{
@@ -231,86 +252,92 @@ public class BlankFragment extends Fragment
 			View rootView = inflater.inflate(R.layout.create_new, container, false);
 			Log.e("Called", "onCreateView: ");
 			//Toast.makeText(getContext(), "Called", Toast.LENGTH_SHORT).show();
-			final EditText repoName = ((EditText) rootView.findViewById(R.id.repo_name_create));
-			path = ((EditText) rootView.findViewById(R.id.folder_path_create));
-			final CircularProgressButton btnCreateNewRepo = (CircularProgressButton) rootView.findViewById(R.id.btn_create_new_repo);
-			CircularProgressButton chooseDirectory = (CircularProgressButton) rootView.findViewById(R.id.btn_chose_directory);
-			btnCreateNewRepo.setIndeterminateProgressMode(true);
-			btnCreateNewRepo.setProgress(0);
-			chooseDirectory.setOnClickListener(new View.OnClickListener()
+			try
 			{
-				@Override
-				public void onClick(View v)
+				final EditText repoName = ((EditText) rootView.findViewById(R.id.repo_name_create));
+				path = ((EditText) rootView.findViewById(R.id.folder_path_create));
+				final CircularProgressButton btnCreateNewRepo = (CircularProgressButton) rootView.findViewById(R.id.btn_create_new_repo);
+				CircularProgressButton chooseDirectory = (CircularProgressButton) rootView.findViewById(R.id.btn_chose_directory);
+				btnCreateNewRepo.setIndeterminateProgressMode(true);
+				btnCreateNewRepo.setProgress(0);
+				chooseDirectory.setOnClickListener(new View.OnClickListener()
 				{
-					final Intent chooserIntent = new Intent(getContext(), DirectoryChooserActivity.class);
-					final DirectoryChooserConfig config = DirectoryChooserConfig.builder().newDirectoryName("DirChooserSample").allowReadOnlyDirectory(true).allowNewDirectoryNameModification(true).build();
-					chooserIntent.putExtra(DirectoryChooserActivity.EXTRA_CONFIG, config);
-					startActivityForResult(chooserIntent, REQUEST_DIRECTORY_PUSH);
-				}
-			});
-			btnCreateNewRepo.setOnClickListener(new View.OnClickListener()
-			{
-				@Override
-				public void onClick(View v)
-				{
-					btnCreateNewRepo.setProgress(50);
-					DirectoryToZip d2z = new DirectoryToZip(new DirectoryToZip.OnTaskDoneListener()
+					@Override
+					public void onClick(View v)
 					{
-						@Override
-						public void onTaskDone(boolean flag, final String path2)
+						final Intent chooserIntent = new Intent(getContext(), DirectoryChooserActivity.class);
+						final DirectoryChooserConfig config = DirectoryChooserConfig.builder().newDirectoryName("DirChooserSample").allowReadOnlyDirectory(true).allowNewDirectoryNameModification(true).build();
+						chooserIntent.putExtra(DirectoryChooserActivity.EXTRA_CONFIG, config);
+						startActivityForResult(chooserIntent, REQUEST_DIRECTORY_PUSH);
+					}
+				});
+				btnCreateNewRepo.setOnClickListener(new View.OnClickListener()
+				{
+					@Override
+					public void onClick(View v)
+					{
+						btnCreateNewRepo.setProgress(50);
+						DirectoryToZip d2z = new DirectoryToZip(new DirectoryToZip.OnTaskDoneListener()
 						{
-							Log.e("TAG", "onTaskDone: " + flag);
-							if (flag)
+							@Override
+							public void onTaskDone(boolean flag, final String path2)
 							{
-								Toast.makeText(getContext(), "Folder Successfully compressed" + Environment.getExternalStorageDirectory(), Toast.LENGTH_SHORT).show();
-								HashMap<String, String> hash = new HashMap<>(2);
-								hash.put("username", Home.userName);
-								hash.put("repoName", repoName.getText().toString());
-								PostRequestSend prs = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/commit.php?", hash);
-								prs.setContext(getContext());
-								prs.setTaskDoneListener(new PostRequestSend.TaskDoneListener()
+								Log.e("TAG", "onTaskDone: " + flag);
+								if (flag)
 								{
-									@Override
-									public String onTaskDone(String str)
+									Toast.makeText(getContext(), "Folder Successfully compressed" + Environment.getExternalStorageDirectory(), Toast.LENGTH_SHORT).show();
+									HashMap<String, String> hash = new HashMap<>(2);
+									hash.put("username", Home2.userName);
+									hash.put("repoName", repoName.getText().toString());
+									PostRequestSend prs = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/commit.php?", hash);
+									prs.setContext(getContext());
+									prs.setTaskDoneListener(new PostRequestSend.TaskDoneListener()
 									{
-										Log.e("onTaskDone", "onTaskDone: " + path2 + " " + str);
-										new UploadFile(path2, getContext()).execute(str.split("\\s+")[str.split("\\s+").length - 1], repoName.getText().toString());
-										btnCreateNewRepo.setProgress(100);
-										Handler handler = new Handler();
-										handler.postDelayed(new Runnable()
+										@Override
+										public String onTaskDone(String str)
 										{
-											@Override
-											public void run()
+											Log.e("onTaskDone", "onTaskDone: " + path2 + " " + str);
+											new UploadFile(path2, getContext()).execute(str.split("\\s+")[str.split("\\s+").length - 1], repoName.getText().toString());
+											btnCreateNewRepo.setProgress(100);
+											Handler handler = new Handler();
+											handler.postDelayed(new Runnable()
 											{
-												btnCreateNewRepo.setProgress(0);
-											}
-										}, 2000);
-										return null;
-									}
-								});
-								prs.execute();
-
-							}
-							else
-							{
-								Toast.makeText(getContext(), "Make sure your folder is not empty", Toast.LENGTH_SHORT).show();
-								btnCreateNewRepo.setProgress(-1);
-								Handler handler = new Handler();
-								handler.postDelayed(new Runnable()
+												@Override
+												public void run()
+												{
+													btnCreateNewRepo.setProgress(0);
+												}
+											}, 2000);
+											return null;
+										}
+									});
+									prs.execute();
+								}
+								else
 								{
-									@Override
-									public void run()
+									Toast.makeText(getContext(), "Make sure your folder is not empty", Toast.LENGTH_SHORT).show();
+									btnCreateNewRepo.setProgress(-1);
+									Handler handler = new Handler();
+									handler.postDelayed(new Runnable()
 									{
-										btnCreateNewRepo.setProgress(0);
-									}
-								}, 2000);
+										@Override
+										public void run()
+										{
+											btnCreateNewRepo.setProgress(0);
+										}
+									}, 2000);
+								}
 							}
-						}
-					});
-					d2z.setContext(getContext());
-					d2z.execute( path.getText().toString(),path.getText().toString()+"/"+ repoName.getText().toString());
-				}
-			});
+						});
+						d2z.setContext(getContext());
+						d2z.execute(path.getText().toString(), path.getText().toString() + "/" + repoName.getText().toString());
+					}
+				});
+			}
+			catch (Exception e)
+			{
+				Toast.makeText(getContext(), "An Error Ocurred Plz Check Your Connection", Toast.LENGTH_SHORT).show();
+			}
 			return rootView;
 
 		}

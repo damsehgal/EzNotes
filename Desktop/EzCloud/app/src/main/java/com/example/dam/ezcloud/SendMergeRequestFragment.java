@@ -67,7 +67,7 @@ public class SendMergeRequestFragment extends MyBasicFragment
 				return false;
 			}
 		});
-		setSpinnerAdapter(Home.userName, spinnerUserRepo);
+		setSpinnerAdapter(Home2.userName, spinnerUserRepo);
 		spinnerToRepo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
 		{
 			@Override
@@ -138,7 +138,7 @@ public class SendMergeRequestFragment extends MyBasicFragment
 		{
 			sendMessage.setProgress(50);
 			HashMap<String, String> hash = new HashMap<>();
-			hash.put("sender", Home.userName);
+			hash.put("sender", Home2.userName);
 			hash.put("receiver", finalReceiver);
 			hash.put("repo_sender_name", finalUserRepo);
 			hash.put("repo_receiver_name", finalReceiverRepo);
@@ -151,7 +151,7 @@ public class SendMergeRequestFragment extends MyBasicFragment
 				public String onTaskDone(String str) throws JSONException
 				{
 					Log.e(TAG, "onTaskDone: am I here ...?");
-					if (str.charAt(0) == 'n')
+					if (str.equals("") ||str.charAt(0) == 'n')
 					{
 						Toast.makeText(context, "Message not send", Toast.LENGTH_SHORT).show();
 						sendMessage.setProgress(-1);

@@ -5,11 +5,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -65,8 +67,9 @@ public class PushRequestFragment extends MyBasicFragment
 		View rootView = getRootView(R.layout.push_request);
 		listView = (ListView) rootView.findViewById(R.id.list_view_container);
 		HashMap<String, String> hashMap = new HashMap<>(1);
-		hashMap.put("receiver", Home.userName);
+		hashMap.put("receiver", Home2.userName);
 		arrayList = new ArrayList<>();
+
 		PostRequestSend postRequestSend = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/receiveMessages.php?", hashMap);
 		postRequestSend.setContext(context);
 		postRequestSend.setTaskDoneListener(new PostRequestSend.TaskDoneListener()
@@ -74,17 +77,32 @@ public class PushRequestFragment extends MyBasicFragment
 			@Override
 			public String onTaskDone(String str) throws JSONException
 			{
-				Log.e(TAG, "onTaskDone: " + str);
-				JSONArray jsonArray = new JSONArray(str);
-				for (int i = 0; i < jsonArray.length(); i++)
+				if (str.equals(""))
 				{
-					arrayList.add(new SingleMessage(jsonArray.getJSONObject(i)));
+					Toast.makeText(context, "Check your connection", Toast.LENGTH_SHORT).show();
 				}
-				listView.setAdapter(new MyAdapter());
+				else
+				{
+					Log.e(TAG, "onTaskDone: " + str);
+					JSONArray jsonArray = new JSONArray(str);
+					for (int i = 0; i < jsonArray.length(); i++)
+					{
+						arrayList.add(new SingleMessage(jsonArray.getJSONObject(i)));
+						Log.e(TAG, "onTaskDone: here ?" );
+					}
+					listView.setAdapter(new MyAdapter());
+				}
 				return null;
 			}
 		});
-		postRequestSend.execute();
+		try
+		{
+			postRequestSend.execute();
+		}
+		catch (Exception e)
+		{
+			Toast.makeText(context, "Check your connection", Toast.LENGTH_SHORT).show();
+		}
 		return rootView;
 	}
 	public class MyAdapter extends BaseAdapter

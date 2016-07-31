@@ -54,7 +54,7 @@ class UploadFile extends AsyncTask<String, Integer, String>
 				try
 				{
 					Log.e("Step2", "doInBackground: called");
-					String upLoadServerUri = "http://ezcloud.esy.es/ezCloudWebsite/uploadFile.php?username=" + Home.userName+"&versionNum="+params[0]+"&repoName="+params[1];
+					String upLoadServerUri = "http://ezcloud.esy.es/ezCloudWebsite/uploadFile.php?username=" + Home2.userName+"&versionNum="+params[0]+"&repoName="+params[1];
 
 					FileInputStream fileInputStream = new FileInputStream(sourceFile);
 					URL url = new URL(upLoadServerUri);
@@ -67,7 +67,7 @@ class UploadFile extends AsyncTask<String, Integer, String>
 					conn.setRequestProperty("ENCTYPE", "multipart/form-data");
 					conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
 					conn.setRequestProperty("bill", sourceFileUri);
-					//	conn.setRequestProperty("username",Home.userName);
+					//	conn.setRequestProperty("username",Home2.userName);
 					dos = new DataOutputStream(conn.getOutputStream());
 					dos.writeBytes(twoHyphens + boundary + lineEnd);
 					dos.writeBytes("Content-Disposition: form-data; name=\"bill\";filename=\"" + sourceFileUri + "\"" + lineEnd);

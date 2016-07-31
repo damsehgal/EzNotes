@@ -43,7 +43,7 @@ public class PullOwnVersionFragment extends MyBasicFragment
 		View rootView = getRootView(R.layout.pull_version);
 		s1 = (Spinner) rootView.findViewById(R.id.select_repository);
 		s2 = (Spinner) rootView.findViewById(R.id.select_version);
-		setSpinnerAdapter(Home.userName, s1);
+		setSpinnerAdapter(Home2.userName, s1);
 		s1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
 		{
 			@Override
@@ -53,7 +53,7 @@ public class PullOwnVersionFragment extends MyBasicFragment
 				if (flag)
 				{
 					Log.e(TAG, "onItemSelected: "+ parent.getAdapter().getItem(position).toString());
-					setSpinnerAdapter(parent.getAdapter().getItem(position).toString(),Home.userName,s2);
+					setSpinnerAdapter(parent.getAdapter().getItem(position).toString(),Home2.userName,s2);
 					editText1 = parent.getAdapter().getItem(position).toString();
 				}
 				else
@@ -156,21 +156,55 @@ public class PullOwnVersionFragment extends MyBasicFragment
 				@Override
 				public void onFileDownload(String path)
 				{
-					String destinationDir = Environment.getExternalStorageDirectory()+"/"+editText1;
-					ZipToDirectory zipToDirectory = new ZipToDirectory();
-					zipToDirectory.execute(path,destinationDir);
-					Toast.makeText(context, "Folder successfully saved with path= " + path, Toast.LENGTH_SHORT).show();
-					btn1.setProgress(100);
-					android.os.Handler handler = new android.os.Handler();
-					handler.postDelayed(new Runnable()
+					if (editText1 == null ||editText2 == null || editText1.isEmpty() ||editText2.isEmpty() || editText1.equals("") ||editText2.equals(""))
 					{
-						@Override
-						public void run()
+						Toast.makeText(context, "Please choose ", Toast.LENGTH_SHORT).show();
+						btn1.setProgress(-1);
+						android.os.Handler handler = new android.os.Handler();
+						handler.postDelayed(new Runnable()
 						{
-							btn1.setProgress(0);
+							@Override
+							public void run()
+							{
+								btn1.setProgress(0);
+							}
+						}, 2000);
+					}
+					else
+					{
+						try
+						{
+							String destinationDir = Environment.getExternalStorageDirectory() + "/" + editText1;
+							ZipToDirectory zipToDirectory = new ZipToDirectory();
+							zipToDirectory.execute(path, destinationDir);
+							Toast.makeText(context, "Folder successfully saved with path= " + path, Toast.LENGTH_SHORT).show();
+							btn1.setProgress(100);
+							android.os.Handler handler = new android.os.Handler();
+							handler.postDelayed(new Runnable()
+							{
+								@Override
+								public void run()
+								{
+									btn1.setProgress(0);
+								}
+							}, 2000);
 						}
-					}, 2000);
+						catch (Exception e)
+						{
+							Toast.makeText(context, "Check Your Connection ", Toast.LENGTH_SHORT).show();
+							btn1.setProgress(100);
+							android.os.Handler handler = new android.os.Handler();
+							handler.postDelayed(new Runnable()
+							{
+								@Override
+								public void run()
+								{
+									btn1.setProgress(0);
+								}
+							}, 2000);
+						}
 
+					}
 				}
 			});
 			downloadFileFTP.execute();

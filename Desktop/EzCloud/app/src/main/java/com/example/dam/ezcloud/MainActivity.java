@@ -4,8 +4,6 @@ package com.example.dam.ezcloud;
  */
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -24,6 +22,7 @@ public class MainActivity extends AppCompatActivity
 {
 	public static final String USERNAME_KEY = "dsaklksdzbcsdzxbcsmz";
 	public static final String PASSWORD_KEY = "zdksanO;aslkaaddav";
+	private static final String TAG = MainActivity.class.getSimpleName();
 	CircularProgressButton login, signUp;
 	EditText userId, passWord;
 	@Override
@@ -39,9 +38,9 @@ public class MainActivity extends AppCompatActivity
 		signUp.setIndeterminateProgressMode(true);
 		userId = (EditText) (findViewById(R.id.user_name));
 		passWord = (EditText) (findViewById(R.id.password));
-		ConnectivityManager cMgr = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-		NetworkInfo netInfo = cMgr.getActiveNetworkInfo();
-		if (netInfo != null && netInfo.isConnected())
+		/*CheckNetConnection checkNetConnection = new CheckNetConnection(this);
+		if (checkNetConnection.isConnectingToInternet())
+		*/
 		{
 			Log.e("isLoggedIn", "onCreate: " + isLoggedIn);
 			if (isLoggedIn)
@@ -64,11 +63,12 @@ public class MainActivity extends AppCompatActivity
 							String[] userInfo = str.split("<br>");
 							for (String temp : userInfo)
 								Log.e("MainActivity", "onTaskDone: " + temp);
-							Intent intent = new Intent(MainActivity.this, Home.class);
+							Intent intent = new Intent(MainActivity.this, Home2.class);
 							intent.putExtra(USERNAME_KEY, userInfo[0]);
 							intent.putExtra(PASSWORD_KEY, userInfo[1]);
 							PreferenceManager.getDefaultSharedPreferences(MainActivity.this).edit().putString("sess_ID", userInfo[2]).commit();
 							startActivity(intent);
+							finish();
 						}
 						catch (IndexOutOfBoundsException e)
 						{
@@ -94,11 +94,6 @@ public class MainActivity extends AppCompatActivity
 					Toast.makeText(MainActivity.this, "Plz check your internet connection", Toast.LENGTH_SHORT).show();
 				}
 			}
-		}
-		else
-		{
-			Log.e("not ", "onCreate: ");
-			Toast.makeText(MainActivity.this, "Plz check your internet connection", Toast.LENGTH_SHORT).show();
 		}
 	}
 	public class LoginOnClick implements View.OnClickListener
@@ -128,29 +123,31 @@ public class MainActivity extends AppCompatActivity
 				hashMap.put("password", passWord.getText().toString());
 				hashMap.put("device", Settings.Secure.getString(MainActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID));
 				PostRequestSend postRequestSend = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/index_app.php?", hashMap);
-				postRequestSend.execute();
+				try
+				{
+					postRequestSend.execute();
+				}
+				catch (Exception e)
+				{
+					Log.e(TAG, "onClick:" + e, e);
+					Toast.makeText(MainActivity.this, "Plz check your connection", Toast.LENGTH_SHORT).show();
+				}
 				postRequestSend.setTaskDoneListener(new PostRequestSend.TaskDoneListener()
 				{
 					@Override
 					public String onTaskDone(String str)
 					{
 						Log.e("Main Activity", "onTaskDone: " + str + " ");
-						if (str.charAt(0) == 't')
+						if (str.equals("") || str.charAt(0) == 'N')
 						{
-							SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-							SharedPreferences.Editor ed = sharedPreferences.edit();
-							ed.putString("sess_ID", str.substring(8));
-							ed.commit();
-							Intent intent = new Intent(MainActivity.this, Home.class);
-							login.setProgress(100);
-							intent.putExtra(USERNAME_KEY, userId.getText().toString());
-							intent.putExtra(PASSWORD_KEY, passWord.getText().toString());
-							startActivity(intent);
-							finish();
-						}
-						else if (str.charAt(0) == 'N')
-						{
-							Toast.makeText(MainActivity.this, "Username does not exist", Toast.LENGTH_SHORT).show();
+							if (str.equals(""))
+							{
+								Toast.makeText(MainActivity.this, "Please connect to internet", Toast.LENGTH_SHORT).show();
+							}
+							else
+							{
+								Toast.makeText(MainActivity.this, "Username does not exist", Toast.LENGTH_SHORT).show();
+							}
 							login.setProgress(-1);
 							Handler handler = new Handler();
 							handler.postDelayed(new Runnable()
@@ -161,6 +158,19 @@ public class MainActivity extends AppCompatActivity
 									login.setProgress(0);
 								}
 							}, 2000);
+						}
+						else if (str.charAt(0) == 't')
+						{
+							SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+							SharedPreferences.Editor ed = sharedPreferences.edit();
+							ed.putString("sess_ID", str.substring(8));
+							ed.commit();
+							Intent intent = new Intent(MainActivity.this, Home2.class);
+							login.setProgress(100);
+							intent.putExtra(USERNAME_KEY, userId.getText().toString());
+							intent.putExtra(PASSWORD_KEY, passWord.getText().toString());
+							startActivity(intent);
+							finish();
 						}
 						else
 						{
@@ -194,59 +204,10 @@ public class MainActivity extends AppCompatActivity
 		@Override
 		public void onClick(View v)
 		{
-			signUp.setProgress(50);
-			if (userId.getText().toString().isEmpty() || passWord.getText().toString().isEmpty())
-			{
-				Toast.makeText(MainActivity.this, "Plz fill all the fields", Toast.LENGTH_SHORT).show();
-				signUp.setProgress(-1);
-				Handler handler = new Handler();
-				handler.postDelayed(new Runnable()
-				{
-					@Override
-					public void run()
-					{
-						signUp.setProgress(0);
-					}
-				}, 2000);
-			}
-			else
-			{
-				HashMap<String, String> hashMap = new HashMap<>();
-				hashMap.put("username", userId.getText().toString());
-				hashMap.put("password", passWord.getText().toString());
-				hashMap.put("device", Settings.Secure.getString(MainActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID));
-				PostRequestSend postRequestSend = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/signup_app.php?", hashMap);
-				postRequestSend.execute();
-				postRequestSend.setTaskDoneListener(new PostRequestSend.TaskDoneListener()
-				{
-					@Override
-					public String onTaskDone(String str)
-					{
-						Log.e("Main Activity", "onTaskDone: " + str);
-						if (str.charAt(0) == 'U')
-						{
-							Toast.makeText(MainActivity.this, "Username Already exist", Toast.LENGTH_SHORT).show();
-							signUp.setProgress(-1);
-							Handler handler = new Handler();
-							handler.postDelayed(new Runnable()
-							{
-								@Override
-								public void run()
-								{
-									signUp.setProgress(0);
-								}
-							}, 2000);
-						}
-						else if (str.charAt(0) == 'I')
-						{
-							Toast.makeText(MainActivity.this, "ID created plz Login", Toast.LENGTH_SHORT).show();
-							signUp.setProgress(100);
-							login.performClick();
-						}
-						return str;
-					}
-				});
-			}
+			Intent intent = new Intent(MainActivity.this, SignupActivity.class);
+			startActivity(intent);
+			finish();
+
 		}
 	}
 }

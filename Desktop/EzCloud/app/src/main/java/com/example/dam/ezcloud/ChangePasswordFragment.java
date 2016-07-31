@@ -40,9 +40,9 @@ public class ChangePasswordFragment extends MyBasicFragment
 				btn1.setIndeterminateProgressMode(true);
 				btn1.setProgress(50);
 				Log.e("called", "onClick: ");
-				if (currentPassword.getText().toString().equals(Home.passWord) && newPassword.getText().toString().equals(confirmPassword.getText().toString()))
+				if (currentPassword.getText().toString().equals(Home2.passWord) && newPassword.getText().toString().equals(confirmPassword.getText().toString()))
 				{
-					Home.passWord = changePassword(Home.userName, newPassword.getText().toString());
+					Home2.passWord = changePassword(Home2.userName, newPassword.getText().toString());
 					Toast.makeText(context, "Password changed successfully", Toast.LENGTH_SHORT).show();
 					btn1.setProgress(100);
 					Handler handler = new Handler();
