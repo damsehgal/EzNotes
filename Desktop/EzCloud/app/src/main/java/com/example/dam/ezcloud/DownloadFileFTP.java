@@ -1,12 +1,7 @@
 package com.example.dam.ezcloud;
 
-import android.app.DownloadManager;
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
@@ -30,7 +25,7 @@ public class DownloadFileFTP extends AsyncTask<Void, Void, String>
 	String path;
 	ProgressDialog progressDialog;
 	OnFileDownloadListener onFileDownloadListener;
-	public DownloadFileFTP(Context context, String fileName,OnFileDownloadListener onFileDownloadListener)
+	public DownloadFileFTP(Context context, String fileName, OnFileDownloadListener onFileDownloadListener)
 	{
 		this.username = Home2.userName;
 		this.context = context;
@@ -60,7 +55,7 @@ public class DownloadFileFTP extends AsyncTask<Void, Void, String>
 		String url = "http://ezcloud.esy.es/ezCloudWebsite/" + username + "/" + fileName + ".zip";
 		Log.e("TAG", "getData: " + url);
 		path = Environment.getExternalStorageDirectory() + "/" + repoN + ".zip";
-		Log.e("TAG", "doInBackground: " + path );
+		Log.e("TAG", "doInBackground: " + path);
 		try
 		{
 			URL myFileOnServer = new URL(url);
@@ -71,21 +66,19 @@ public class DownloadFileFTP extends AsyncTask<Void, Void, String>
 			if (!file.exists())
 			{
 				file.createNewFile();
-				Log.e("TAG", "doInBackground: R2D2" );
+				Log.e("TAG", "doInBackground: R2D2");
 			}
-			Log.e("TAG", "doInBackground: reached Here" );
+			Log.e("TAG", "doInBackground: reached Here");
 			FileOutputStream fileOutputStream = new FileOutputStream(file);
 			InputStream inputStream = httpURLConnection.getInputStream();
-
 			byte[] buffer = new byte[1024];
 			int bufferLength = 0;
-			while ( (bufferLength = inputStream.read(buffer)) > 0 )
+			while ((bufferLength = inputStream.read(buffer)) > 0)
 			{
 				fileOutputStream.write(buffer, 0, bufferLength);
-
 			}
 			fileOutputStream.close();
-			Log.e("TAG", "doInBackground: reached Here2" );
+			Log.e("TAG", "doInBackground: reached Here2");
 		}
 		catch (MalformedURLException e)
 		{
@@ -95,13 +88,12 @@ public class DownloadFileFTP extends AsyncTask<Void, Void, String>
 		{
 			e.printStackTrace();
 		}
-		return Environment.getExternalStorageDirectory() + "/" + repoN+ ".zip";
+		return Environment.getExternalStorageDirectory() + "/" + repoN + ".zip";
 	}
 	@Override
 	protected void onPostExecute(String s)
 	{
-		Log.e("TAG", "onPostExecute: Am i here" );
-
+		Log.e("TAG", "onPostExecute: Am i here");
 		onFileDownloadListener.onFileDownload(s);
 		progressDialog.dismiss();
 		super.onPostExecute(s);

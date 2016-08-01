@@ -29,18 +29,18 @@ import java.util.HashMap;
 
 public class BlankFragment extends Fragment
 {
-	public static BlankFragment newInstance (int value)
+	public static BlankFragment newInstance(int value)
 	{
 		BlankFragment blankFragment = new BlankFragment();
 		Bundle b = new Bundle();
-		b.putInt("key",value);
+		b.putInt("key", value);
 		blankFragment.setArguments(b);
 		return blankFragment;
 	}
 	private static final String TAG = "BlankFragment";
 	public static final int REQUEST_DIRECTORY_PUSH = 4530;
-	EditText et1 , path;
-	int position ;
+	EditText et1, path;
+	int position;
 	static Uri uri;
 	OnCreateViewCalledListener ocvcl;
 	public void setOnCreateViewCalledListener(OnCreateViewCalledListener ocvcListener)
@@ -60,17 +60,13 @@ public class BlankFragment extends Fragment
 	{
 		super.onCreate(savedInstanceState);
 	}
-
-
-
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState)
 	{
 		Bundle bundle = this.getArguments();
 		if (bundle == null)
 		{
-			Log.e(TAG, "onCreateView: fass gya" );
+			Log.e(TAG, "onCreateView: fass gya");
 			position = 0;
 		}
 		else
@@ -92,7 +88,7 @@ public class BlankFragment extends Fragment
 			CircularProgressButton choseFile = (CircularProgressButton) rootView.findViewById(R.id.btn_chose_file);
 			final CircularProgressButton saveFile = (CircularProgressButton) rootView.findViewById(R.id.save_file);
 			final CircularProgressButton upLoadFile = (CircularProgressButton) rootView.findViewById(R.id.upload_file);
-			et1= (EditText) rootView.findViewById(R.id.opened_file);
+			et1 = (EditText) rootView.findViewById(R.id.opened_file);
 			choseFile.setIndeterminateProgressMode(true);
 			saveFile.setIndeterminateProgressMode(true);
 			upLoadFile.setIndeterminateProgressMode(true);
@@ -113,7 +109,7 @@ public class BlankFragment extends Fragment
 						@Override
 						public void onTaskComplete(boolean isSuccessful)
 						{
-							if(isSuccessful)
+							if (isSuccessful)
 							{
 								upLoadFile.setProgress(100);
 								Handler handler = new Handler();
@@ -142,7 +138,6 @@ public class BlankFragment extends Fragment
 						}
 					});
 					uploadFile.execute();
-
 				}
 			});
 			saveFile.setOnClickListener(new View.OnClickListener()
@@ -180,7 +175,6 @@ public class BlankFragment extends Fragment
 								saveFile.setProgress(0);
 							}
 						}, 2000);
-
 						Toast.makeText(getContext(), "Permission Not Granted", Toast.LENGTH_SHORT).show();
 					}
 					catch (IOException e)
@@ -210,10 +204,8 @@ public class BlankFragment extends Fragment
 								saveFile.setProgress(0);
 							}
 						}, 2000);
-
 					}
 				}
-
 			});
 			choseFile.setOnClickListener(new View.OnClickListener()
 			{
@@ -232,12 +224,10 @@ public class BlankFragment extends Fragment
 			});
 			return rootView;
 		}
-
 		else if (position == 2)
 		{
 			return new PushRequestFragment(inflater, container, savedInstanceState, getContext()).onCreate();
 		}
-
 		else if (position == 3)
 		{
 			//Todo Pull Version
@@ -291,6 +281,7 @@ public class BlankFragment extends Fragment
 									hash.put("repoName", repoName.getText().toString());
 									PostRequestSend prs = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/commit.php?", hash);
 									prs.setContext(getContext());
+									prs.setContext(getContext());
 									prs.setTaskDoneListener(new PostRequestSend.TaskDoneListener()
 									{
 										@Override
@@ -339,7 +330,6 @@ public class BlankFragment extends Fragment
 				Toast.makeText(getContext(), "An Error Ocurred Plz Check Your Connection", Toast.LENGTH_SHORT).show();
 			}
 			return rootView;
-
 		}
 		else
 		{
@@ -391,7 +381,6 @@ public class BlankFragment extends Fragment
 				break;
 		}
 	}
-
 	public interface OnCreateViewCalledListener
 	{
 		void onCreateViewCalled(int position);

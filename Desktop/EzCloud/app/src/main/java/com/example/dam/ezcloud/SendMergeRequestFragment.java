@@ -54,7 +54,6 @@ public class SendMergeRequestFragment extends MyBasicFragment
 		receiverName = (EditText) rootView.findViewById(R.id.edit_text_to);
 		details = (EditText) rootView.findViewById(R.id.edit_text_details);
 		sendMessage = (CircularProgressButton) rootView.findViewById(R.id.btn_send_message);
-
 		receiverName.setOnKeyListener(new View.OnKeyListener()
 		{
 			public boolean onKey(View v, int keyCode, KeyEvent event)
@@ -151,7 +150,7 @@ public class SendMergeRequestFragment extends MyBasicFragment
 				public String onTaskDone(String str) throws JSONException
 				{
 					Log.e(TAG, "onTaskDone: am I here ...?");
-					if (str.equals("") ||str.charAt(0) == 'n')
+					if (str.equals("") || str.charAt(0) == 'n')
 					{
 						Toast.makeText(context, "Message not send", Toast.LENGTH_SHORT).show();
 						sendMessage.setProgress(-1);

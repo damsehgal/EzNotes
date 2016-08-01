@@ -11,14 +11,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class Home2 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
 	static String userName, passWord;
-	static ProgressDialog pd ;
+	static ProgressDialog pd;
 	Uri uri;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -29,6 +28,7 @@ public class Home2 extends AppCompatActivity implements NavigationView.OnNavigat
 		userName = intent.getStringExtra(MainActivity.USERNAME_KEY);
 		passWord = intent.getStringExtra(MainActivity.PASSWORD_KEY);
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		toolbar.setTitle(userName);
 		setSupportActionBar(toolbar);
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -37,6 +37,9 @@ public class Home2 extends AppCompatActivity implements NavigationView.OnNavigat
 		toggle.syncState();
 		NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
+		navigationView.getMenu().getItem(2).setChecked(true);
+		navigationView.setCheckedItem(navigationView.getMenu().getItem(2).getItemId());
+		onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_push_request));
 	}
 	@Override
 	public void onBackPressed()
@@ -58,11 +61,11 @@ public class Home2 extends AppCompatActivity implements NavigationView.OnNavigat
 		getMenuInflater().inflate(R.menu.home2, menu);
 		return true;
 	}
-	public void setFragment( int position)
+	public void setFragment(int position)
 	{
 		BlankFragment blankFragment = new BlankFragment();
 		Bundle bundle = new Bundle();
-		bundle.putInt("key",position);
+		bundle.putInt("key", position);
 		blankFragment.setArguments(bundle);
 		if (position == 1)
 		{
@@ -81,8 +84,6 @@ public class Home2 extends AppCompatActivity implements NavigationView.OnNavigat
 	{
 		// Handle navigation view item clicks here.
 		int id = item.getItemId();
-		
-
 		if (id == R.id.nav_change_password)
 		{
 			setFragment(0);
@@ -107,7 +108,6 @@ public class Home2 extends AppCompatActivity implements NavigationView.OnNavigat
 		{
 			setFragment(5);
 		}
-
 		else if (id == R.id.nav_logout)
 		{
 			setFragment(6);

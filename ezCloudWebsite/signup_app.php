@@ -1,5 +1,6 @@
 <?php
 include_once 'dbconnect_app.php';
+
 session_start();
 {	
 	$username = $_POST['username'];

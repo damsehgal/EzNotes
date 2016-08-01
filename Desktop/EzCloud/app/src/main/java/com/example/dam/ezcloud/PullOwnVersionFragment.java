@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -20,8 +19,6 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 /**
  * Created by dam on 25/7/16.
@@ -49,17 +46,16 @@ public class PullOwnVersionFragment extends MyBasicFragment
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
 			{
-				Log.e(TAG, "onItemSelected: called ... " );
+				Log.e(TAG, "onItemSelected: called ... ");
 				if (flag)
 				{
-					Log.e(TAG, "onItemSelected: "+ parent.getAdapter().getItem(position).toString());
-					setSpinnerAdapter(parent.getAdapter().getItem(position).toString(),Home2.userName,s2);
+					Log.e(TAG, "onItemSelected: " + parent.getAdapter().getItem(position).toString());
+					setSpinnerAdapter(parent.getAdapter().getItem(position).toString(), Home2.userName, s2);
 					editText1 = parent.getAdapter().getItem(position).toString();
 				}
 				else
 				{
-					flag = true ;
-
+					flag = true;
 				}
 			}
 			@Override
@@ -114,38 +110,36 @@ public class PullOwnVersionFragment extends MyBasicFragment
 					e.printStackTrace();
 				}
 				spinner.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, arr));
-				Log.e(TAG, "onTaskDone: completed." );
+				Log.e(TAG, "onTaskDone: completed.");
 				return null;
 			}
 		});
 		postRequestSend.execute();
 	}
-	public void setSpinnerAdapter(String reponame , String username , final Spinner spinner)
+	public void setSpinnerAdapter(String reponame, String username, final Spinner spinner)
 	{
-		HashMap <String,String> hashMap  = new HashMap<>();
-		hashMap.put("reponame",reponame);
-		hashMap.put("username",username);
-		PostRequestSend prs = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/get_repo_version.php?",hashMap);
+		HashMap<String, String> hashMap = new HashMap<>();
+		hashMap.put("reponame", reponame);
+		hashMap.put("username", username);
+		PostRequestSend prs = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/get_repo_version.php?", hashMap);
 		prs.setTaskDoneListener(new PostRequestSend.TaskDoneListener()
 		{
 			@Override
 			public String onTaskDone(String str) throws JSONException
 			{
-				Log.e(TAG, "onTaskDone: "+str );
+				Log.e(TAG, "onTaskDone: " + str);
 				int length = Integer.parseInt(str);
 				ArrayList<String> arr = new ArrayList<>();
-				for (int i = 0 ; i <  length;i++)
-					arr.add(i,""+(i+1));
-				spinner.setAdapter(new ArrayAdapter<>(context,android.R.layout.simple_spinner_item,arr));
+				for (int i = 0; i < length; i++)
+					arr.add(i, "" + (i + 1));
+				spinner.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, arr));
 				return null;
 			}
 		});
 		prs.execute();
-
 	}
 	public class Btn1OnClickListener implements View.OnClickListener
 	{
-
 		@Override
 		public void onClick(View v)
 		{
@@ -156,7 +150,7 @@ public class PullOwnVersionFragment extends MyBasicFragment
 				@Override
 				public void onFileDownload(String path)
 				{
-					if (editText1 == null ||editText2 == null || editText1.isEmpty() ||editText2.isEmpty() || editText1.equals("") ||editText2.equals(""))
+					if (editText1 == null || editText2 == null || editText1.isEmpty() || editText2.isEmpty() || editText1.equals("") || editText2.equals(""))
 					{
 						Toast.makeText(context, "Please choose ", Toast.LENGTH_SHORT).show();
 						btn1.setProgress(-1);
@@ -203,7 +197,6 @@ public class PullOwnVersionFragment extends MyBasicFragment
 								}
 							}, 2000);
 						}
-
 					}
 				}
 			});

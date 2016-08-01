@@ -3,29 +3,29 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_change_password"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="CHANGE PASSWORD" />
-        <item
             android:id="@+id/nav_open_file"
             android:icon="@drawable/ic_menu_gallery"
             android:title="OPEN FILE" />
         <item
+            android:id="@+id/nav_create_new"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="CREAATE NEW" />
+        <item
             android:id="@+id/nav_push_request"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="PUSH REQUEST" />
+            android:title="PULL REQUESTS" />
         <item
             android:id="@+id/nav_pull_version"
             android:icon="@drawable/ic_menu_manage"
-            android:title="PULL VERSION" />
+            android:title="CLONE VERSION" />
         <item
             android:id="@+id/nav_merge_req"
             android:icon="@drawable/ic_menu_manage"
-            android:title="MERGE REQUEST" />
+            android:title="SEND MERGE REQUEST" />
         <item
-            android:id="@+id/nav_create_new"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Create New" />
+            android:id="@+id/nav_change_password"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="CHANGE PASSWORD" />
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_menu_manage"

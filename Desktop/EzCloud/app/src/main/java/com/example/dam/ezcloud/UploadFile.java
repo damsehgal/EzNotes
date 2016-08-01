@@ -3,7 +3,6 @@ package com.example.dam.ezcloud;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -28,12 +27,9 @@ class UploadFile extends AsyncTask<String, Integer, String>
 		this.path = path;
 		this.context = context;
 	}
-
 	@Override
 	protected String doInBackground(String... params)
 	{
-
-
 		try
 		{
 			int serverResponseCode = 0;
@@ -48,14 +44,12 @@ class UploadFile extends AsyncTask<String, Integer, String>
 			byte[] buffer;
 			int maxBufferSize = 1 * 1024 * 1024;
 			File sourceFile = new File(sourceFileUri);
-
 			if (sourceFile.isFile())
 			{
 				try
 				{
 					Log.e("Step2", "doInBackground: called");
-					String upLoadServerUri = "http://ezcloud.esy.es/ezCloudWebsite/uploadFile.php?username=" + Home2.userName+"&versionNum="+params[0]+"&repoName="+params[1];
-
+					String upLoadServerUri = "http://ezcloud.esy.es/ezCloudWebsite/uploadFile.php?username=" + Home2.userName + "&versionNum=" + params[0] + "&repoName=" + params[1];
 					FileInputStream fileInputStream = new FileInputStream(sourceFile);
 					URL url = new URL(upLoadServerUri);
 					conn = (HttpURLConnection) url.openConnection();
@@ -87,7 +81,6 @@ class UploadFile extends AsyncTask<String, Integer, String>
 					dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
 					serverResponseCode = conn.getResponseCode();
 					String serverResponseMessage = conn.getResponseMessage();
-
 					if (serverResponseCode == 200)
 					{
 						Log.e("Step3", "doInBackground: " + serverResponseMessage);
@@ -101,7 +94,6 @@ class UploadFile extends AsyncTask<String, Integer, String>
 					fileInputStream.close();
 					dos.flush();
 					dos.close();
-
 				}
 				catch (Exception e)
 				{
@@ -125,13 +117,12 @@ class UploadFile extends AsyncTask<String, Integer, String>
 	protected void onPostExecute(String result)
 	{
 		onTaskDoneListener.onTaskComplete(result.equals("Executed"));
+		super.onPostExecute(result);
 	}
-
 	@Override
 	protected void onPreExecute()
 	{
 	}
-
 	@Override
 	protected void onProgressUpdate(Integer... values)
 	{

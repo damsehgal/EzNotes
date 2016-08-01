@@ -51,6 +51,7 @@ public class LogoutFragment extends MyBasicFragment
 					Log.e("LOGOUT", "onCreateView: " + preferences.getString("sess_ID", ""));
 					Intent intent = new Intent(context, MainActivity.class);
 					activity.startActivity(intent);
+					activity.finish();
 				}
 				return null;
 			}

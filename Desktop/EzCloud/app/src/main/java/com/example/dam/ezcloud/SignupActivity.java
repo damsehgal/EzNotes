@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -30,7 +29,7 @@ public class SignupActivity extends AppCompatActivity
 		logIn = (CircularProgressButton) findViewById(R.id.sign_up_login_btn);
 		password = (EditText) findViewById(R.id.signup_password);
 		rePassword = (EditText) findViewById(R.id.signup_re_password);
-		username = (EditText) findViewById(R.id.signup_user_name    );
+		username = (EditText) findViewById(R.id.signup_user_name);
 		signUp.setIndeterminateProgressMode(true);
 		signUp.setProgress(0);
 		signUp.setOnClickListener(new View.OnClickListener()
@@ -116,7 +115,7 @@ public class SignupActivity extends AppCompatActivity
 			@Override
 			public void onClick(View v)
 			{
-				Intent intent = new Intent(SignupActivity.this,MainActivity.class);
+				Intent intent = new Intent(SignupActivity.this, MainActivity.class);
 				startActivity(intent);
 				finish();
 			}

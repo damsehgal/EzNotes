@@ -5,13 +5,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -69,7 +67,6 @@ public class PushRequestFragment extends MyBasicFragment
 		HashMap<String, String> hashMap = new HashMap<>(1);
 		hashMap.put("receiver", Home2.userName);
 		arrayList = new ArrayList<>();
-
 		PostRequestSend postRequestSend = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/receiveMessages.php?", hashMap);
 		postRequestSend.setContext(context);
 		postRequestSend.setTaskDoneListener(new PostRequestSend.TaskDoneListener()
@@ -88,7 +85,7 @@ public class PushRequestFragment extends MyBasicFragment
 					for (int i = 0; i < jsonArray.length(); i++)
 					{
 						arrayList.add(new SingleMessage(jsonArray.getJSONObject(i)));
-						Log.e(TAG, "onTaskDone: here ?" );
+						Log.e(TAG, "onTaskDone: here ?");
 					}
 					listView.setAdapter(new MyAdapter());
 				}
@@ -133,8 +130,6 @@ public class PushRequestFragment extends MyBasicFragment
 		{
 			LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			final MyView myView;
-//			if (convertView == null)
-//			{
 			convertView = layoutInflater.inflate(R.layout.messages_received1, null);
 			myView = new MyView();
 			myView.imageView = (ImageView) convertView.findViewById(R.id.temp_image_view);
@@ -145,17 +140,6 @@ public class PushRequestFragment extends MyBasicFragment
 			myView.sender = (TextView) convertView.findViewById(R.id.temp_edit_text_from);
 			myView.details = (TextView) convertView.findViewById(R.id.temp_edit_text_details);
 			myView.download = (CircularProgressButton) convertView.findViewById(R.id.temp_btn_download);
-
-			/*  //myView.commit = (Button) convertView.findViewById(R.id.btn_commit);
-				myView.timeOfMessage = (TextView) convertView.findViewById(R.id.text_view_time);
-				myView.isRead = (TextView) convertView.findViewById(R.id.text_view_is_read);
-				*/
-			convertView.setTag(myView);
-//			}
-			/*else
-			{
-				myView = (MyView) convertView.getTag();
-			}*/
 			myView.details.setText(getItem(position).details);
 			myView.sender.setText(getItem(position).sender);
 			myView.download.setProgress(0);
