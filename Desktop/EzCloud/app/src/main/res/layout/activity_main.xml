@@ -65,19 +65,19 @@
         android:textStyle="italic"/>
 
         <com.dd.CircularProgressButton
-            android:layout_gravity="center"
+            android:id="@+id/sign_up_btn"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="SignUp"
-            android:textSize="20sp"
-            android:textColor="#FFFFFF"
-            android:id="@+id/sign_up_btn"
             android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
             app:cpb_textComplete="Complete"
             app:cpb_textError="There was an error"
             app:cpb_textIdle="SignUp"
 
-    />
+            />
 
 
 
