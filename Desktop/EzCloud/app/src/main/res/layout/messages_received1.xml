@@ -1,74 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="horizontal"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:id="@+id/temp_list_view_container"
-    >
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:id="@+id/temp_image_view"/>
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_weight="4"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="from"
-            android:textColor="#000"
-            android:id="@+id/temp_edit_text_from"/>
-        <TextView
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto"
+                  android:id="@+id/temp_list_view_container"
+                  android:layout_width="match_parent"
+                  android:tag="front"
+                  android:layout_height="match_parent"
+                  android:orientation="horizontal"
+        >
 
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/temp_image_view"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/temp_edit_text_from"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="from"
+                android:textColor="#000"/>
+
+            <TextView
+
+                android:id="@+id/temp_edit_text_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Details"
+                android:textColor="#000"/>
+        </LinearLayout>
+
+        <com.dd.CircularProgressButton
+            android:id="@+id/temp_btn_download"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Details"
-            android:textColor="#000"
-            android:layout_weight="2"
-            android:id="@+id/temp_edit_text_details"/>
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            app:cpb_textComplete="Downloaded"
+            app:cpb_textError="There was an error"
+            app:cpb_textIdle="Download"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="3"
+            >
+
+            <TextView
+                android:id="@+id/txt_delete"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:clickable="false"
+                android:gravity="center_vertical"
+                android:hapticFeedbackEnabled="true"
+                android:text="deleted"
+                android:textColor="@android:color/white"/>
+
+            <TextView
+                android:id="@+id/txt_undo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:gravity="center"
+                android:text="undo"
+                android:textColor="#FFFF00"/>
+
+        </LinearLayout>
     </LinearLayout>
-    <com.dd.CircularProgressButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:textAllCaps="false"
-        app:cpb_textComplete="Downloaded"
-        app:cpb_textError="There was an error"
-        app:cpb_textIdle="Download"
-        android:id="@+id/temp_btn_download"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        android:weightSum="3"
-    >
+        android:tag="reveal-right"
+        android:layout_height="match_parent">
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:id="@+id/txt_delete"
-            android:gravity="center_vertical"
-            android:text="deleted"
-            android:clickable="false"
-            android:layout_weight="2"
-            android:hapticFeedbackEnabled="true"
-            android:textColor="@android:color/white"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:id="@+id/txt_undo"
-            android:text="undo"
-            android:clickable="false"
-            android:layout_weight="1"
-            android:textColor="#FFFF00"/>
+            android:layout_width="match_parent"
+            android:text="Delete"
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:tag="reveal-left"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:text="Delete"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+</FrameLayout>
