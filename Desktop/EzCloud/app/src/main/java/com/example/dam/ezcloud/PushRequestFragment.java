@@ -40,6 +40,9 @@ public class PushRequestFragment extends MyBasicFragment
 		final HashMap<String, String> hashMap = new HashMap<>(1);
 		hashMap.put("receiver", Home2.userName);
 		arrayList = new ArrayList<>();
+		LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+		recyclerView.setLayoutManager(layoutManager);
+		recyclerView.setHasFixedSize(true);
 		PostRequestSend postRequestSend = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/receiveMessages.php?", hashMap);
 		postRequestSend.setContext(context);
 		postRequestSend.setTaskDoneListener(new PostRequestSend.TaskDoneListener()
@@ -60,10 +63,7 @@ public class PushRequestFragment extends MyBasicFragment
 						arrayList.add(new SingleMessage(jsonArray.getJSONObject(i)));
 						Log.e(TAG, "onTaskDone: here ?");
 					}
-					LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-					recyclerView.setLayoutManager(layoutManager);
-					recyclerView.setHasFixedSize(true);
-					adapter = new MyAdapter(arrayList ,context);
+					adapter = new MyAdapter(arrayList, context);
 					recyclerView.setAdapter(adapter);
 					swipeToAction = new SwipeToAction(recyclerView, new SwipeToAction.SwipeListener<SingleMessage>()
 					{
@@ -71,7 +71,7 @@ public class PushRequestFragment extends MyBasicFragment
 						public boolean swipeLeft(SingleMessage itemData)
 						{
 							removeItem(itemData);
-							return false;
+							return true;
 						}
 						@Override
 						public boolean swipeRight(SingleMessage itemData)
@@ -86,9 +86,7 @@ public class PushRequestFragment extends MyBasicFragment
 						public void onLongClick(SingleMessage itemData)
 						{
 						}
-
 					});
-
 				}
 				return null;
 			}
@@ -101,22 +99,21 @@ public class PushRequestFragment extends MyBasicFragment
 		{
 			Toast.makeText(context, "Check your connection", Toast.LENGTH_SHORT).show();
 		}
-
 		return rootView;
 	}
 	private int removeItem(SingleMessage singleMessage)
 	{
 		int position = arrayList.indexOf(singleMessage);
 		arrayList.remove(singleMessage);
-		HashMap <String , String> hashMap =  new HashMap<>(1);
-		hashMap.put("message_id",singleMessage.messageId);
+		HashMap<String, String> hashMap = new HashMap<>(1);
+		hashMap.put("message_id", singleMessage.messageId);
 		PostRequestSend postRequestSend = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/delete_message.php?", hashMap);
 		postRequestSend.setTaskDoneListener(new PostRequestSend.TaskDoneListener()
 		{
 			@Override
 			public String onTaskDone(String str) throws JSONException
 			{
-				Log.e(TAG, "onTaskDone: " + str );
+				Log.e(TAG, "onTaskDone: " + str);
 				return null;
 			}
 		});

@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.dam.ezcloud.SignupActivity">
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,71 +23,77 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:layout_width="match_parent"
-            android:textColor="#000"
-            android:layout_margin="0dp"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
             android:id="@+id/signup_user_name"
-            android:hint="UserName"/>
-    </com.wrapp.floatlabelededittext.FloatLabeledEditText>
-    <com.wrapp.floatlabelededittext.FloatLabeledEditText
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
-        <EditText
-            android:layout_margin="0dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#000"
+            android:layout_margin="0dp"
+            android:hint="UserName"
+            android:singleLine="true"
+            android:textColor="#000"/>
+    </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+    <com.wrapp.floatlabelededittext.FloatLabeledEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
             android:id="@+id/signup_password"
-            android:inputType="textPassword"
-            android:hint="PassWord"/>
-    </com.wrapp.floatlabelededittext.FloatLabeledEditText>
-    <com.wrapp.floatlabelededittext.FloatLabeledEditText
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
-        <EditText
-            android:layout_margin="0dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#000"
-            android:id="@+id/signup_re_password"
+            android:layout_margin="0dp"
+            android:hint="PassWord"
             android:inputType="textPassword"
-            android:hint="PassWord Again"/>
+            android:textColor="#000"/>
     </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+    <com.wrapp.floatlabelededittext.FloatLabeledEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/signup_re_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:hint="PassWord Again"
+            android:inputType="textPassword"
+            android:textColor="#000"/>
+    </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
     <com.dd.CircularProgressButton
-        android:layout_gravity="center"
+        android:id="@+id/signup_signup_btn"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="Signup"
-        android:textSize="20sp"
-        android:textAllCaps="false"
-        android:id ="@+id/signup_signup_btn"
-        android:textColor="#FFFFFF"
-        app:cpb_textComplete="Complete"
+        android:layout_gravity="center"
         android:layout_margin="0dp"
+        android:text="Signup"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:cpb_textComplete="Complete"
         app:cpb_textError="There was an Error"
         app:cpb_textIdle="Signup"
         />
+
     <TextView
-        android:layout_margin="0dp"
-        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textColor="#000"
+        android:layout_gravity="center"
+        android:layout_margin="0dp"
         android:text="Already a member , click Login"
+        android:textColor="#000"
+        android:textSize="18sp"
         android:textStyle="italic"/>
 
     <com.dd.CircularProgressButton
-        android:layout_gravity="center"
+        android:id="@+id/sign_up_login_btn"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="Login"
-        android:textSize="20sp"
-        android:textColor="#FFFFFF"
-        android:id="@+id/sign_up_login_btn"
         android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
         app:cpb_textComplete="Complete"
         app:cpb_textError="There was an error"
         app:cpb_textIdle="Log In"

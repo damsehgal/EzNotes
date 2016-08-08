@@ -9,9 +9,9 @@
     tools:context="com.example.dam.ezcloud.Home2"
     tools:showIn="@layout/app_bar_home2">
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/frame_layout_contains_fragment">
-        </FrameLayout>
+    <FrameLayout
+        android:id="@+id/frame_layout_contains_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
 </RelativeLayout>

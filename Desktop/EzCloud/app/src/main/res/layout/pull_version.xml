@@ -1,34 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:gravity="center">
+              android:gravity="center"
+              android:orientation="vertical">
+
     <Spinner
+        android:id="@+id/select_repository"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:spinnerMode="dialog"
-        android:prompt="@string/receiver_repo_prompt"
         android:focusable="true"
-        android:id="@+id/select_repository"/>
+        android:prompt="@string/receiver_repo_prompt"
+        android:spinnerMode="dialog"/>
+
     <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:spinnerMode="dialog"
-        android:prompt="@string/receiver_repo_prompt"
-        android:focusable="true"
         android:id="@+id/select_version"
-        />
-    <com.dd.CircularProgressButton
-        android:layout_width="200dp"
-        android:id="@+id/btn_pull_version"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:focusable="true"
+        android:prompt="@string/receiver_repo_prompt"
+        android:spinnerMode="dialog"
+        />
+
+    <com.dd.CircularProgressButton
+        android:id="@+id/btn_pull_version"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Pull Version"
+        android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        android:textAllCaps="false"
         app:cpb_textComplete="File Downloaded"
         app:cpb_textError="Error"
-        app:cpb_textIdle="Pull Version"
-        android:text="Pull Version"/>
+        app:cpb_textIdle="Pull Version"/>
 </LinearLayout>

@@ -6,12 +6,12 @@
               android:orientation="vertical">
 
 
-        <EditText
-            android:id="@+id/opened_file"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4"
-            android:inputType="textFilter|textMultiLine"/>
+    <EditText
+        android:id="@+id/opened_file"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:inputType="textFilter|textMultiLine"/>
 
 
     <LinearLayout
