@@ -108,11 +108,20 @@ public class PushRequestFragment extends MyBasicFragment
 	{
 		int position = arrayList.indexOf(singleMessage);
 		arrayList.remove(singleMessage);
-		adapter.notifyItemRemoved(position);
 		HashMap <String , String> hashMap =  new HashMap<>(1);
 		hashMap.put("message_id",singleMessage.messageId);
 		PostRequestSend postRequestSend = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/delete_message.php?", hashMap);
+		postRequestSend.setTaskDoneListener(new PostRequestSend.TaskDoneListener()
+		{
+			@Override
+			public String onTaskDone(String str) throws JSONException
+			{
+				Log.e(TAG, "onTaskDone: " + str );
+				return null;
+			}
+		});
 		postRequestSend.execute();
+		adapter.notifyItemRemoved(position);
 		return position;
 	}
 }

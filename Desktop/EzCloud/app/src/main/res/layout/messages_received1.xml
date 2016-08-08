@@ -4,9 +4,7 @@
              android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  xmlns:app="http://schemas.android.com/apk/res-auto"
-                  android:id="@+id/temp_list_view_container"
+    <LinearLayout android:id="@+id/temp_list_view_container"
                   android:layout_width="match_parent"
                   android:tag="front"
                   android:layout_height="match_parent"
@@ -15,19 +13,19 @@
 
         <ImageView
             android:id="@+id/temp_image_view"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="4"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/temp_edit_text_from"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="from"
@@ -36,7 +34,7 @@
             <TextView
 
                 android:id="@+id/temp_edit_text_details"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text="Details"
@@ -63,7 +61,7 @@
 
             <TextView
                 android:id="@+id/txt_delete"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:clickable="false"
@@ -74,7 +72,7 @@
 
             <TextView
                 android:id="@+id/txt_undo"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:clickable="false"
@@ -84,7 +82,7 @@
 
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:tag="reveal-right"
         android:layout_height="match_parent">
@@ -93,8 +91,8 @@
             android:text="Delete"
             android:layout_height="match_parent"/>
 
-    </LinearLayout>
-    <LinearLayout
+    </RelativeLayout>
+    <RelativeLayout
         android:layout_width="match_parent"
         android:tag="reveal-left"
         android:layout_height="match_parent">
@@ -103,5 +101,5 @@
             android:text="Delete"
             android:layout_height="match_parent"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 </FrameLayout>
