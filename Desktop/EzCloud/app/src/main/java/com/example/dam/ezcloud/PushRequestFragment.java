@@ -5,13 +5,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,8 +28,6 @@ import java.util.Random;
 /**
  * Created by dam on 25/7/16.
  */
-// TODO RECEIVE PUSH REQUEST
-// Create chat Database
 public class PushRequestFragment extends MyBasicFragment
 {
 	private static final String TAG = PushRequestFragment.class.getSimpleName();
@@ -42,6 +39,7 @@ public class PushRequestFragment extends MyBasicFragment
 		String repo_sender;
 		String repo_receiver;
 		String time;
+		String messageId;
 		int isRead;
 		public SingleMessage(JSONObject jsonObject) throws JSONException
 		{
@@ -51,6 +49,7 @@ public class PushRequestFragment extends MyBasicFragment
 			details = jsonObject.getString("details");
 			time = jsonObject.getString("message_time");
 			isRead = jsonObject.getInt("isRead");
+			messageId = jsonObject.getString("message_id");
 		}
 	}
 	public PushRequestFragment(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, Context context)
@@ -58,13 +57,13 @@ public class PushRequestFragment extends MyBasicFragment
 		super(inflater, container, savedInstanceState, context);
 	}
 	ArrayList<SingleMessage> arrayList;
-	ListView listView;
+	RecyclerView listView;
 	@Override
 	public View onCreate()
 	{
-		View rootView = getRootView(R.layout.push_request);
-		listView = (ListView) rootView.findViewById(R.id.list_view_container);
-		HashMap<String, String> hashMap = new HashMap<>(1);
+		final View rootView = getRootView(R.layout.push_request);
+		listView = (RecyclerView) rootView.findViewById(R.id.list_view_container);
+		final HashMap<String, String> hashMap = new HashMap<>(1);
 		hashMap.put("receiver", Home2.userName);
 		arrayList = new ArrayList<>();
 		PostRequestSend postRequestSend = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/receiveMessages.php?", hashMap);
@@ -102,57 +101,56 @@ public class PushRequestFragment extends MyBasicFragment
 		}
 		return rootView;
 	}
-	public class MyAdapter extends BaseAdapter
+	public class MyRecyclerViewHolder extends RecyclerView.ViewHolder
 	{
-		public class MyView
+		ImageView imageView;
+		TextView sender, details;
+		CircularProgressButton download;
+		public MyRecyclerViewHolder(View convertView)
 		{
-			ImageView imageView;
-			TextView sender, details;
-			CircularProgressButton download;
+			super(convertView);
+			imageView = (ImageView) convertView.findViewById(R.id.temp_image_view);
+			sender = (TextView) convertView.findViewById(R.id.temp_edit_text_from);
+			details = (TextView) convertView.findViewById(R.id.temp_edit_text_details);
+			download = (CircularProgressButton) convertView.findViewById(R.id.temp_btn_download);
 		}
+	}
+
+	public class MyAdapter extends RecyclerView.Adapter<MyRecyclerViewHolder>
+	{
+
 		@Override
-		public int getCount()
+		public MyRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
 		{
-			return arrayList.size();
+			LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View itemView = li.inflate(R.layout.push_request,null);
+			MyRecyclerViewHolder myRecyclerViewHolder = new MyRecyclerViewHolder(itemView);
+			return  myRecyclerViewHolder;
 		}
-		@Override
 		public SingleMessage getItem(int position)
 		{
 			return arrayList.get(position);
 		}
 		@Override
-		public long getItemId(int position)
+		public void onBindViewHolder(final MyRecyclerViewHolder holder, final int position)
 		{
-			return 0;
-		}
-		@Override
-		public View getView(final int position, View convertView, ViewGroup parent)
-		{
-			LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			final MyView myView;
-			convertView = layoutInflater.inflate(R.layout.messages_received1, null);
-			myView = new MyView();
-			myView.imageView = (ImageView) convertView.findViewById(R.id.temp_image_view);
 			Random rnd = new Random();
 			final int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
 			TextDrawable drawable = TextDrawable.builder().beginConfig().toUpperCase().endConfig().buildRect("" + getItem(position).sender.charAt(0), color);
-			myView.imageView.setImageDrawable(drawable);
-			myView.sender = (TextView) convertView.findViewById(R.id.temp_edit_text_from);
-			myView.details = (TextView) convertView.findViewById(R.id.temp_edit_text_details);
-			myView.download = (CircularProgressButton) convertView.findViewById(R.id.temp_btn_download);
-			myView.details.setText(getItem(position).details);
-			myView.sender.setText(getItem(position).sender);
-			myView.download.setProgress(0);
-			myView.download.setIndeterminateProgressMode(true);
-			myView.download.setOnClickListener(new View.OnClickListener()
+			holder.imageView.setImageDrawable(drawable);
+			holder.details.setText(getItem(position).details);
+			holder.sender.setText(getItem(position).sender);
+			holder.download.setProgress(0);
+			holder.download.setIndeterminateProgressMode(true);
+			holder.download.setOnClickListener(new View.OnClickListener()
 			{
 				@Override
 				public void onClick(View v)
 				{
-					myView.download.setProgress(50);
+					holder.download.setProgress(50);
 					final String[] ver = new String[1];
 					HashMap<String, String> hashMap = new HashMap<String, String>();
-					hashMap.put("username", myView.sender.getText().toString());
+					hashMap.put("username", holder.sender.getText().toString());
 					hashMap.put("reponame", getItem(position).repo_receiver);
 					PostRequestSend postRequestSend = new PostRequestSend("http://ezcloud.esy.es/ezCloudWebsite/get_repo_version.php?", hashMap);
 					postRequestSend.setContext(context);
@@ -163,7 +161,7 @@ public class PushRequestFragment extends MyBasicFragment
 						{
 							ver[0] = str;
 							String getFileName = getItem(position).repo_receiver + "/" + str + "/" + getItem(position).repo_receiver;
-							DownloadFileFTP downloadFileFTP = new DownloadFileFTP(context, getFileName, myView.sender.getText().toString(), new DownloadFileFTP.OnFileDownloadListener()
+							DownloadFileFTP downloadFileFTP = new DownloadFileFTP(context, getFileName, holder.sender.getText().toString(), new DownloadFileFTP.OnFileDownloadListener()
 							{
 								@Override
 								public void onFileDownload(String path)
@@ -171,7 +169,7 @@ public class PushRequestFragment extends MyBasicFragment
 									Log.e(TAG, "onFileDownload: " + path);
 									if (path.contains("//"))
 									{
-										myView.download.setProgress(-1);
+										holder.download.setProgress(-1);
 										Toast.makeText(context, "Check your Internet", Toast.LENGTH_SHORT).show();
 										Handler handler = new Handler();
 										handler.postDelayed(new Runnable()
@@ -179,7 +177,7 @@ public class PushRequestFragment extends MyBasicFragment
 											@Override
 											public void run()
 											{
-												myView.download.setProgress(0);
+												holder.download.setProgress(0);
 											}
 										}, 2000);
 									}
@@ -193,18 +191,18 @@ public class PushRequestFragment extends MyBasicFragment
 											{
 												if (isCompleted)
 												{
-													myView.download.setProgress(100);
+													holder.download.setProgress(100);
 												}
 												else
 												{
-													myView.download.setProgress(-1);
+													holder.download.setProgress(-1);
 													Handler handler = new Handler();
 													handler.postDelayed(new Runnable()
 													{
 														@Override
 														public void run()
 														{
-															myView.download.setProgress(0);
+															holder.download.setProgress(0);
 														}
 													}, 2000);
 												}
@@ -222,7 +220,17 @@ public class PushRequestFragment extends MyBasicFragment
 					postRequestSend.execute();
 				}
 			});
-			return convertView;
 		}
+		@Override
+		public long getItemId(int position)
+		{
+			return 0;
+		}
+		@Override
+		public int getItemCount()
+		{
+			return arrayList.size();
+		}
+
 	}
 }
