@@ -76,7 +76,8 @@ public class PushRequestFragment extends MyBasicFragment
 						@Override
 						public boolean swipeRight(SingleMessage itemData)
 						{
-							return false;
+							removeItem(itemData);
+							return true;
 						}
 						@Override
 						public void onClick(SingleMessage itemData)
