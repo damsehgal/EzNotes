@@ -65,29 +65,36 @@ public class PushRequestFragment extends MyBasicFragment
 					}
 					adapter = new MyAdapter(arrayList, context);
 					recyclerView.setAdapter(adapter);
-					swipeToAction = new SwipeToAction(recyclerView, new SwipeToAction.SwipeListener<SingleMessage>()
+					try
 					{
-						@Override
-						public boolean swipeLeft(SingleMessage itemData)
+						swipeToAction = new SwipeToAction(recyclerView, new SwipeToAction.SwipeListener<SingleMessage>()
 						{
-							removeItem(itemData);
-							return true;
-						}
-						@Override
-						public boolean swipeRight(SingleMessage itemData)
-						{
-							removeItem(itemData);
-							return true;
-						}
-						@Override
-						public void onClick(SingleMessage itemData)
-						{
-						}
-						@Override
-						public void onLongClick(SingleMessage itemData)
-						{
-						}
-					});
+							@Override
+							public boolean swipeLeft(SingleMessage itemData)
+							{
+								removeItem(itemData);
+								return true;
+							}
+							@Override
+							public boolean swipeRight(SingleMessage itemData)
+							{
+								removeItem(itemData);
+								return true;
+							}
+							@Override
+							public void onClick(SingleMessage itemData)
+							{
+							}
+							@Override
+							public void onLongClick(SingleMessage itemData)
+							{
+							}
+						});
+					}
+					catch (Exception e)
+					{
+						Log.e(TAG, "onTaskDone: " , e);
+					}
 				}
 				return null;
 			}

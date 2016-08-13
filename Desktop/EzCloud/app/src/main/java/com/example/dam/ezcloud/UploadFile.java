@@ -116,7 +116,8 @@ class UploadFile extends AsyncTask<String, Integer, String>
 	@Override
 	protected void onPostExecute(String result)
 	{
-		onTaskDoneListener.onTaskComplete(result.equals("Executed"));
+		if(onTaskDoneListener != null)
+			onTaskDoneListener.onTaskComplete(result.equals("Executed"));
 		super.onPostExecute(result);
 	}
 	@Override
