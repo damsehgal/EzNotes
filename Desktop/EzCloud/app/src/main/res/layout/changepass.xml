@@ -3,7 +3,7 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="#FFFFFF"
+              android:background="@drawable/logo2"
               android:gravity="center_vertical"
               android:orientation="vertical"
               android:padding="10dp"
@@ -17,7 +17,8 @@
             android:id="@+id/curr_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="curent Password"
+            android:hint="Curent Password"
+            android:textColorHint="#000"
             android:inputType="textPassword"
             android:padding="20dp"
 
@@ -33,6 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="New Password"
+            android:textColorHint="#000"
             android:inputType="textPassword"
             android:padding="20dp"
             android:singleLine="true"/>
@@ -48,6 +50,7 @@
             android:layout_height="wrap_content"
             android:hint="Confirm Password"
             android:inputType="textPassword"
+            android:textColorHint="#000"
             android:padding="20dp"
             android:singleLine="true"/>
     </com.wrapp.floatlabelededittext.FloatLabeledEditText>
