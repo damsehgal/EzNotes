@@ -194,6 +194,7 @@
 package com.example.dam.ezcloud;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -203,6 +204,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dd.CircularProgressButton;
@@ -245,6 +247,8 @@ public class PullOwnVersionFragment extends MyBasicFragment
 					Log.e(TAG, "onItemSelected: " + parent.getAdapter().getItem(position).toString());
 					setSpinnerAdapter(parent.getAdapter().getItem(position).toString(), Home2.userName, s2);
 					editText1 = parent.getAdapter().getItem(position).toString();
+					//((TextView) parent.getChildAt(0)).setTextColor(Color.BLUE);
+					((TextView) parent.getChildAt(0)).setTextSize(30);
 				}
 				else
 				{
@@ -263,6 +267,7 @@ public class PullOwnVersionFragment extends MyBasicFragment
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
 			{
 				editText2 = parent.getAdapter().getItem(position).toString();
+				((TextView) parent.getChildAt(0)).setTextSize(30);
 			}
 			@Override
 			public void onNothingSelected(AdapterView<?> parent)
@@ -364,7 +369,7 @@ public class PullOwnVersionFragment extends MyBasicFragment
 							String destinationDir = Environment.getExternalStorageDirectory() + "/" + editText1;
 							ZipToDirectory zipToDirectory = new ZipToDirectory();
 							zipToDirectory.execute(path, destinationDir);
-							Toast.makeText(context, "Folder successfully saved with path= " + path, Toast.LENGTH_SHORT).show();
+							//Toast.makeText(context, "Folder successfully saved with path= " + path, Toast.LENGTH_SHORT).show();
 							btn1.setProgress(100);
 							android.os.Handler handler = new android.os.Handler();
 							handler.postDelayed(new Runnable()

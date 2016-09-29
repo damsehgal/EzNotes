@@ -4,31 +4,31 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_open_file"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/open_file"
             android:title="OPEN FILE" />
         <item
             android:id="@+id/nav_create_new"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="CREAATE NEW" />
+            android:icon="@drawable/add_file_512"
+            android:title="CREATE NEW" />
         <item
             android:id="@+id/nav_push_request"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/inbox_receive_512"
             android:title="PULL REQUESTS" />
         <item
             android:id="@+id/nav_pull_version"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/clone_icon"
             android:title="CLONE VERSION" />
         <item
             android:id="@+id/nav_merge_req"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/school_icons_paper_plane_icon"
             android:title="SEND MERGE REQUEST" />
         <item
             android:id="@+id/nav_change_password"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/unlock"
             android:title="CHANGE PASSWORD" />
         <item
             android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/logout"
             android:title="Logout" />
     </group>
 

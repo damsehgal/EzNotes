@@ -468,7 +468,7 @@ public class BlankFragment extends Fragment
 								Log.e("TAG", "onTaskDone: " + flag);
 								if (flag)
 								{
-									Toast.makeText(getContext(), "Folder Successfully compressed" + Environment.getExternalStorageDirectory(), Toast.LENGTH_SHORT).show();
+									//Toast.makeText(getContext(), "Folder Successfully compressed" + Environment.getExternalStorageDirectory(), Toast.LENGTH_SHORT).show();
 									HashMap<String, String> hash = new HashMap<>(2);
 									hash.put("username", Home2.userName);
 									hash.put("repoName", repoName.getText().toString());
